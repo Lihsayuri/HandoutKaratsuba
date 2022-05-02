@@ -175,6 +175,20 @@ Já falamos que o algoritmo de Karatsuba serve para simplificar a multiplicaçã
 Antes de começar tome uma água. As contas não vão ser extremamente complicadas. Mas tome uma água. 
 !!!
 
+Primeiro, precisamos deixar claro que o algoritmo de Karatsuba é um algoritmo de divisão e conquista assim como o merge sort, ou seja, para realizar a multiplicação, o algoritmo:
+
+1. Divide os números que irá multiplicar em números menores.
+2. Faz uma árvore recursiva com esses números e vai multiplicando.
+3. E no final soma aplica pela última vez o algoritmo de Karatsuba para os últimos valores do topo do árvore.
+
+Então vamos começar pelo primeiro passo, dividindo os números que serão multiplicados. Nesse caso para multiplicar $123 * 456$, iremos dividir da seguinte forma:
+
+* x = 123 e o número pode ser dividido em duas partes: a e b.
+
+
+
+
+
 <!-- 
 Você também pode criar
 
