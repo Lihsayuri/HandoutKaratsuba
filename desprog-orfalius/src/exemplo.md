@@ -159,11 +159,11 @@ E como vimos em aula, uma complexidade quadrática é algo que queremos evitar, 
 
 Isso porque, imagine alguns dos processos que utilizam da multiplicação, principalmente com números grandes. Ou melhor imagine multiplicar milhões de dígitos por
 milhões de dígitos. É isso que acontece em muitas aplicações de processamento de sinais que são correlação, convolução, análise de frequência, processamento de imagem, etc.
-Além disso, a eficiência de multiplicações é uma base para implementação de moduladores, criptossistemas e até mesmo para a ULA (Unidade Lógica Aritmética) que vimos na matéria de Elementos de Sistemas. 
+Além disso, a eficiência de multiplicações é uma base para implementação de moduladores, criptossistemas e até mesmo para a ULA (Unidade Lógica Aritmética) que vimos na matéria de Elementos de Sistemas... Você lembra, né? 
 
 Pense que nos criptossistemas, por exemplo, a aritmética modular é a operação central na sua grande maioria. E muitos dos sistemas criptográficos requerem multiplicações modulares para gerar chaves privadas, fazendo o uso de exponenciação modular de grandes números para criptografar dados, o que é um processo lento por si só devido a repetição de muitas multiplicações. Agora imagine se a eficiência da operação é baixa... Complicado, não?
 
-É por isso que muitas companias como a Intel utilizam o algoritmo de Karatsuba, pois ele foi desenvolvido para aumentar a eficiência e simplificar a multiplicação - principalmente para números grandes. Um breve *background* do algoritmo é que ele foi desenvolvido em 1960 por Anatoly Karatsuba, um matemático que nasceu na União Soviética (<a href="https://www.youtube.com/watch?v=U06jlgpMtQs"> Importante </a>) e que morreu em 2008, tendo trabalhado principalmente nos campos da teoria analítica de número e nas séries de Dirichlet.  
+É por isso que muitas companias como a Intel utilizam o algoritmo de Karatsuba, pois ele foi desenvolvido para aumentar a eficiência e simplificar a multiplicação - principalmente para números grandes. Um breve *background* do algoritmo é que ele foi desenvolvido em 1960 por Anatoly Karatsuba, um matemático que nasceu na União Soviética (<a href="https://www.youtube.com/watch?v=U06jlgpMtQs"> Importante </a>) e que morreu em 2008, tendo trabalhado principalmente nos campos da teoria analítica de número e nas séries de Dirichlet (não se preocupe com o que é, só por ter um nome difícil já é legal).
 
 
 Como o algoritmo funciona?
