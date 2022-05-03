@@ -187,6 +187,8 @@ Então vamos começar pelo primeiro passo, dividindo os números que serão mult
 * y = 273123 e o número pode ser dividido em duas partes: c e d.
 
 
+... Henrique
+
 Qual a complexidade do algoritmo?
 ---------
 
@@ -260,28 +262,25 @@ Além disso, também vamos já acrescentar o retorno da função, que é exatame
 
 ??? Checkpoint
 
-Implemente em C, as recursões e o retorno do algoritmo. Além disso, já defina o $n$, que será o maior número de dígitos de um número (por questão de simetria, vamos dividindo sempre e pegando maior quantidade de termos para serem multiplicados até chegar nas menores) dividido por 2. E lembre-se que nessa divisão, o número deve ser arredondado para cima.
+Implemente em C, as recursões e o retorno do algoritmo. Além disso, já defina o $n$, que será o tamanho do número de dígitos dividido por 2. 
 
 !!! Dica
-Pesquise o que a função `md: ceil` e o que a função `md: fmax` da biblioteca `<math.h>` faz.
+Pesquisa o que a função `md: fmax` da biblioteca `<math.h>` faz.
 !!!
-
 
 ::: Gabarito
 
 Você fez mesmo a função? Se não conseguiu entender, vamos por partes:
 
-* O $n$ é exatamente o maior tamanho dos dígitos dividido por 2 e arredondado para cima.
+**O n é exatamente o maior tamanho dos dígitos dentre os dois números dividido por 2.**
 
-Por que o maior tamanho dos dígitos? Por questão simétrica. Dessa forma, imagine que vamos multiplicar 1234 e 567. O $a$ do primeiro número será 12 e o $b$ 34, da mesma forma para o segundo número, teremos que $d$ será 67 e o $c$ será 5. 
+* Por que o maior tamanho dos dígitoa entre os dois números?
+Para não perder valores e garantir que estaremos fazendo o karatsuba com todos os dígitos de um número. Dessa forma, imagine que vamos multiplicar 13 e 5200000. Se pegássemos o número de dígitos do 13, que é 2, quando fóssemos dividir os números em partes menores (principalmente o 5200000) teríamos problemas.
 
 * Por que dividido por 2?
 
 Pois na fórmula temos que os dois 10 que aparecem estão elevados a $n/2$. Então isso já ajuda a deixar mais compacto e com menos variáveis na conta final, melhorando a sua vizualização :).
 
-* Por que pegar o resultado dessa conta arredondado para cima? 
-
-Isso você entenderá melhor nos próximos passos, mas é basicamente para conseguirmos determinar os valores de $a$, $b$, $c$ e $d$.
 
 ::: Gabarito do gabarito
 ``` c
@@ -293,7 +292,7 @@ long karatsuba(long X, long Y)
         return X * Y;
 
     // Recur until base case
-    int n = (int)ceil(size / 2.0);
+    int n = (int)(size / 2.0);
 
     long ac = karatsuba(a, c);
     long bd = karatsuba(b, d);
@@ -313,14 +312,17 @@ long karatsuba(long X, long Y)
 
 A única coisa que falta agora em nossa função é determinar os termos que aparecem na equação, e que irão se utilizar do $n$ determinado anteriormente. Caso você tenha esquecido como descrevemos matematicamente cada um dos termos, volte ao bloco anterior.
 
-In the C Programming Language, the ceil function returns the smallest integer that is greater than or equal to x (ie: rounds up the nearest integer).
+??? Checkpoint
 
-In the C Programming Language, the floor function returns the largest integer that is smaller than or equal to x (ie: rounds downs the nearest integer).
+Por último, implemente em c as definições dos termos $a$, $b$, $c$ e $d$.
 
-Returns the larger of two floating point arguments, treating NaNs as missing data (between a NaN and a numeric value, the numeric value is chosen).
+!!! Dica
+Sempre que você for dividindo os números pela metade, pode fazer uso da potência de 10...
+!!!
+
+::: Gabarito
 
 ``` c
-
 
 long karatsuba(long X, long Y)
 {
@@ -332,11 +334,11 @@ long karatsuba(long X, long Y)
     int size = fmax(getSize(X), getSize(Y));
 
     // Split X and Y
-    int n = (int)ceil(size / 2.0);
+    int n = (int)(size / 2.0);
     long p = (long)pow(10, n);
-    long a = (long)floor(X / (double)p);
+    long a = (long)(X / (double)p);
     long b = X % p;
-    long c = (long)floor(Y / (double)p);
+    long c = (long)(Y / (double)p);
     long d = Y % p;
 
     // Recur until base case
@@ -350,6 +352,20 @@ long karatsuba(long X, long Y)
 
 ``` 
 
+:::
+
+???
+
+Agora que já temos o código do algoritmo de karatsuba podemos fazer um dos exercícios que você mais gosta : calcular a complexidade do código. Não é muito diferente do que já fizemos em aula. Antes de continuar, uma frase para motivá-lo:
+
+*"As a programmer, never underestimate your ability to come up with ridiculously complex solutions for simple problems." FUCHS, Thomas.* 
+
+![](smart_cat.gif)
+
+E é por isso que é sempre bom nos atentarmos a complexidade das nossas soluções e dos algoritmos que vamos usar. Claro que não apenas isso, mas não deixa de ser uma parte bem importante :)
+
+
+... Guilherme
 
 
 
