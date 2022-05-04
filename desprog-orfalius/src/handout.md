@@ -212,7 +212,7 @@ Eu sei... É bastante coisa, mas dá para ver que não é complicado(....né?). 
 
 Imagine agora o que deveríamos fazer após separar os termos desses números, já que agora temos uma multiplicação entre dois números de 3 dígitos cada um. Porém, como faremos cada uma delas? Pense a respeito disso.
 
-*OBS:* Não precisa fazer nenhuma conta ou raciocínio muito longo ou complexo, apenas pense em como seria.
+**OBS:** Não precisa fazer nenhuma conta ou raciocínio muito longo ou complexo, apenas pense em como seria.
 
 ::: Gabarito
 
@@ -231,11 +231,45 @@ Portanto, para deixar isso tudo mais visual, teremos as seguintes multiplicaçõ
 
 :karatsuba_arv
 
+Agora sim! Tudo pronto, certo? 
+
+Errado! Na verdade o **lema número 1 do Karatsuba** é: Jamais multiplicarás números de 2 ou mais dígitos.
+
+Logo, teremos que realizar mais Karatsubas com todos os 3 ramos gerados e seus subsequentes até atingir uma multiplicação entre 2 números de {red} (1 dígito) e, já que é um algoritmo de divisão e conquista, isso implicará um código que utilizará regressão. 
+
+:::
+
+???
+
+??? Checkpoint
+
+Beleza! Temos a nossa primeira árvore do Karatsuba gerada. Agora, tente fazer, por completo, o ramo da esquerda do exercício acima, chegando no valor final após todas as iterações com o Karatsuba.
+
+!!! Dica
+
+Lembre da grandiosa e famosa **Equação Fundamental de Karatsuba (EFK)**!
+
+$A.C.10^{2.(n/2)} + (A.D + B.C).10^{n/2} + B.D$
+
+!!!
+
+::: Gabarito
+
+
+:karatsuba_gab
 
 
 :::
 
 ???
+
+Logo, após todos esses exercícios, podemos, finalmente, obter a árvore final dessa conta:
+
+
+![](karatsuba_gabFINAL.drawio.png)
+
+
+É... pois é, é bastante coisa. Porém, tudo isso fica muito mais simples quando começamos a codar e deixar o computador fazer! ;)
 
 Qual a complexidade do algoritmo?
 ---------
