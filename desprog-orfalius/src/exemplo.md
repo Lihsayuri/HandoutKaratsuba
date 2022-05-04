@@ -186,6 +186,10 @@ Então vamos começar pelo primeiro passo, dividindo os números que serão mult
 * x = 143721 e o número pode ser dividido em duas partes: a e b.
 * y = 273123 e o número pode ser dividido em duas partes: c e d.
 
+O que pode ser ilustrado na figura abaixo:
+
+![](KaratsubaNum.jpeg)
+
 
 ... Henrique
 
