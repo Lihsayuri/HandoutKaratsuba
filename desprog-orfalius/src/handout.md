@@ -426,12 +426,37 @@ Lembre-se de pensar em cada uma das três recursões, e a complexidade na "volta
 
 ::: Gabarito
 
-![](arvoreKaratsuba.png)
+![](arvRecursao.png)
+
+Em cada degrau da árvore, temos três ramos que indicam as recursões, onde cada uma é **f(*degrau anterior*/2)**, e um ramo que representa o que acontece na *volta*, ou seja, a conta que "junta" tudo. Nesse ramo da volta, a complexidade é o próprio ***degrau anterior*/2**.
+
+Para ilustrar, veja o degrau de *f(n/2)* e seus ramos. Cada ramo  é *f(n/4)*, e o ramo de volta é o próprio *n/2*.
 
 :::
 ???
 
+Sabendo a árvore de recursão, podemos usá-la para calcular a complexidade inteira. Prepare-se que vamos usar um pouco daquela *matemágica*!
 
+??? Checkpoint
+Tente calcular a complexidade do algoritmo do Karatsuba. Revise o material no <a href=https://ensino.hashi.pro.br/desprog/resumo/analise/caixa.html> site da disciplina</a> em caso de dúvidas. 
+
+::: Gabarito
+Vamos resolver passo a passo:
+
+**Passo 1:**
+
+Primeiro é importante identificar a altura de nossa árvore. Como n vai reduzindo dividindo por 2, sabemos que a altura será **$log_2(n)$**.
+
+[[q = $log_2n$]]
+
+**Passo 2:**
+
+O próximo passo é identificar o padrão do retorno da recursão (os passos em {red}(vermelho) na figura anterior). Não podemos esquecer que, para não deixar a imagem muito poluída, não foram mostradas as recursões dos dois ramos do meio, mas ainda temos ramos {red}("vermelhos") neles. Essa próxima imagem mostra a lógica apenas desses ramos:
+
+![](arvRecursao2.png)
+
+Começamos com [[{red}(n)]], depois temos [[{red}(3n/2)]], no próximo [[{red}(9n/4)]] ...
+???
 
 <!-- 
 Você também pode criar
