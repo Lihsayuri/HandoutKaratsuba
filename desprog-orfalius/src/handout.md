@@ -191,7 +191,51 @@ O que pode ser ilustrado na figura abaixo:
 ![](KaratsubaNum.jpeg)
 
 
-... Henrique
+Como a gente pode ver pela figura acima, separamos os dois termos que estão sendo multiplicados em quatro partes:
+- $A = 143$
+- $B = 721$
+- $C = 273$
+- $D = 123$
+
+Logo, tendo os números separados dessa maneira, temos os termos separados para realizarmos as operações necessárias. Além disso, sabemos que:
+
+- x = $A.10^{(n/2)} + B$
+- y = $C.10^{(n/2)} + D$
+
+E, com isso, $x.y$ (que é o que queremos calcular, certo?) seria a multiplicação desses dois termos, resultando na **Equação Fundamental de Karatsuba (EFK)** (a gente inventou esse nome, mas isso vai facilitar muito o processo daqui para frente):
+
+- $= A.C.10^{2.(n/2)} + (A.D + B.C).10^{n/2} + B.D$
+
+Eu sei... É bastante coisa, mas dá para ver que não é complicado(....né?). Bom, os próximos passos são um pouco mais complexos e exigem mais atenção, então pega aquela 7 Bello e dá uma boa olhada no que vem por aí. 
+
+??? Checkpoint
+
+Imagine agora o que deveríamos fazer após separar os termos desses números, já que agora temos uma multiplicação entre dois números de 3 dígitos cada um. Porém, como faremos cada uma delas? Pense a respeito disso.
+
+*OBS:* Não precisa fazer nenhuma conta ou raciocínio muito longo ou complexo, apenas pense em como seria.
+
+::: Gabarito
+
+Sabemos que precisaremos calcular $A.C$, $B.D$ e $A.D + B.C$ para aplicar na EFK. Logo, teremos 2 multiplicações entre 3 dígitos cada, a de $A.C$ e $B.D$, correto _meu pequeno gafanhoto_? Sendo assim, ainda precisamos encontrar uma forma de realizar o cálculo de $A.D + B.C$, o que chamaremos de {red}(termo misterioso) sem passos extras desnecessários. Logo, com algumas _matemágicas_:
+
+$= (A + B).(C + D) - A.C - B.D$
+
+$= (A.C + A.D + B.C + B.D) - A.C - A.D$
+
+$= A.D + B.C$
+
+Você deve estar pensando... como raios isso nos ajudou? Bem, é simples, agora nós sabemos que o {red}(termo misterioso) é, na verdade, $(A + B)(C + D) - A.C - B.D$ e, como já estamos realizando o cálculo tanto de $A.C$ quanto de $B.D$, iremos precisar realizar apenas mais uma multiplicação extra, a de $A + B$ por $C + D$.
+
+Portanto, para deixar isso tudo mais visual, teremos as seguintes multiplicações: 
+
+
+:karatsuba_arv
+
+
+
+:::
+
+???
 
 Qual a complexidade do algoritmo?
 ---------
