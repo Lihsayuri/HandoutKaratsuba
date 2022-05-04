@@ -368,9 +368,24 @@ Agora que já temos o código do algoritmo de karatsuba podemos fazer um dos exe
 
 E é por isso que é sempre bom nos atentarmos a complexidade das nossas soluções e dos algoritmos que vamos usar. Claro que não apenas isso, mas não deixa de ser uma parte bem importante :)
 
+Calculando a Complexidade
+------
 
-... Guilherme
+Como já vimos em aulas passadas, com algoritmos com recursão, é preciso fazer a árvore de recursões para entender a complexidade. 
 
+??? Checkpoint
+Usando os conceitos já aprendidos nessa disciplina, desenvolva a árvore de recursão do algoritmo Karatsuba a partir do código desenvolvido anteriormente.
+
+!!! Dica
+Lembre-se de pensar em cada uma das três recursões, e a complexidade na "volta" das recursões!
+!!!
+
+::: Gabarito
+
+![](arvoreKaratsuba.png)
+
+:::
+???
 
 
 
