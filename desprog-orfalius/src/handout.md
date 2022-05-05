@@ -512,15 +512,33 @@ ${n}\cdot{\frac{\frac{3}{2}^{log_{2}n} - 1}{\frac{3}{2}-1}}$
 
 Usando algumas transformações matemáticas e ferramentas que estão no site da disciplina:
 
-*(focando no numerador da fração:)*
+{red}(*focando no numerador da fração:*)
 
 $\frac{3}{2}^{log_{2}n} - 1$ --->
 $\frac{3^{log_2n}}{2^{log_2n}} - 1$ --->
 $\frac{3^{\frac{log_3n}{log_{3}2}}}{n} - 1$ --->
-$\frac{n^{\frac{1}{log_{3}2}}}{n} - 1$
+$\frac{n^{\frac{1}{log_{3}2}}}{n} - 1$ --->
+$\frac{n^{log_{2}{3}}}{n} - 1$
 
+{red}(*operações matemáticas com toda a equação:*)
 
+${n}\cdot{\frac{\frac{n^{log_{2}{3}}}{n} - 1}{\frac{1}{2}}}$ --->
+${n}\cdot{(\frac{n^{log_{2}{3}}}{n} - 1)}\cdot{2}$ --->
+${(\frac{n^{log_{2}{3}}}{n}\cdot{n} - {1}\cdot{n})}\cdot{2}$ --->
+$n^{log_{2}{3}} - 2n$
+
+Após todas essa opreações, ficamos com a equação final assim:
+
+[[$n^{log_{2}{3}} - 2n$]]
+
+Porém, ainda não acabamos. Como vocês sabem, para calcular a complexidade mesmo, precisamos considerar o pior caso possível. Então, apesar de termos o termo $2n$, não será ele que vamos considerar. O termo que vamos considerar é o $n^{log_{2}{3}}$.
+
+Portanto, a complexidade do algoritmo é ***$O(n^{log_{2}{3}})$***.
 ???
+
+Agora sabemos a complexidade do algorimto, mas por que ele é melhor que o método normal de multiplicação? Já que $log_23$ é igual a aproximadamente 1.5849, podemos escrever a complaxidade do Karatsuba como *$O(n^{1.59})$*. 
+
+A complexidade do método normal é ***$O(n^2)$***, enquanto a complexidade do algoritmo Karatsuba é ***$O(n^{1.59})$***, e portanto, é mais eficiente! Não é uma melhora tão grande, já que existem algoritmos mais recentes e mais eficientes que também realizam multiplicação. Porém, considerando a data que foi desenvolvido e sua complexidade, o algoritmo Karatsuba, sem dúvidas, é um algoritmo que vale a pena estudar!
 
 <!-- 
 Você também pode criar
