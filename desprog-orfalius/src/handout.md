@@ -481,7 +481,7 @@ Vamos resolver passo a passo:
 
 Primeiro é importante identificar a altura de nossa árvore. Como n vai reduzindo dividindo por 2, sabemos que a altura será **$log_2(n)$**.
 
-[[q = $log_2n$]]
+* [[x = $log_2n$]]
 
 **Passo 2:**
 
@@ -489,7 +489,37 @@ O próximo passo é identificar o padrão do retorno da recursão (os passos em 
 
 ![](arvRecursao2.png)
 
-Começamos com [[{red}(n)]], depois temos [[{red}(3n/2)]], no próximo [[{red}(9n/4)]] ...
+Começamos com 1 vez n ([[{red}(n)]]), depois temos 3 vezes n/2 ([[{red}(3n/2)]]), no próximo 9 vezes n/4 ([[{red}(9n/4)]]) ...
+
+Seguindo esse padrão, temos uma **progressão geométrica**, com a raiz sendo 3/2! Assim:
+
+* [[q = 3/2]]
+
+Tendo essas informações, podemos usar a fórmula de complexidade para PGs:
+
+* ${a1}\cdot{\frac{q^x - 1}{q-1}}$
+
+Onde:
+* $a1$ é o primeiro elemento;
+* $q$ é a razão;
+* $x$ é o número de elementos;
+
+**Passo 3:**
+
+Agora, basta substituir na equação os valores que já conhecemos:
+
+${n}\cdot{\frac{\frac{3}{2}^{log_{2}n} - 1}{\frac{3}{2}-1}}$
+
+Usando algumas transformações matemáticas e ferramentas que estão no site da disciplina:
+
+*(focando no numerador da fração:)*
+
+$\frac{3}{2}^{log_{2}n} - 1$ --->
+$\frac{3^{log_2n}}{2^{log_2n}} - 1$ --->
+$\frac{3^{\frac{log_3n}{log_{3}2}}}{n} - 1$ --->
+$\frac{n^{\frac{1}{log_{3}2}}}{n} - 1$
+
+
 ???
 
 <!-- 
