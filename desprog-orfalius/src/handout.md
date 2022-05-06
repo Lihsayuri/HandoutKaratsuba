@@ -21,12 +21,11 @@ Se você tivesse que implementar a multiplicação desse método ingênuo em for
 !!! Aviso
 Você não precisa implementar o código de fato, apenas pense em sua estrutura e depois confira a resposta.
 
-Observação: não se preocupe com os carries e nem com os zeros. Apenas pense na estrutura do código de maneira geral. 
+Observação: não se preocupe com os *carries* (famosos "sobe 1") e nem com os zeros. Apenas pense na estrutura do código de maneira geral. 
 !!!
 
 ::: Gabarito
-Você provavelmente deve ter pensando em duas estruturas de loop: uma estrutura de loop externa que vai passando para a próximo dígito conforme os dígitos do multiplicando vão sendo multiplicados, e outra interna que vai passando dígito a dígito conforme os dígitos do multiplicador vão passando pelos
-dígitos do multiplicando. 
+Você provavelmente deve ter pensando em duas estruturas de loop: uma estrutura de loop externa que vai passando para a próximo dígito conforme os dígitos do multiplicando vão sendo multiplicados, e outra interna que vai passando dígito a dígito pelos dígitos do multiplicador.
 :::
 
 ???
@@ -40,7 +39,7 @@ for (int i = 0; i < n; i++){
             mult_interna[j] = array_num1[i]*array_num2[j]
         }
         
-        mult_externa[i] = concatena(row_result[j], 3);
+        mult_externa[i] = concatena(mult_interna[j], 3);
 }
     
     return soma(line_results);
@@ -163,7 +162,7 @@ Além disso, a eficiência de multiplicações é uma base para implementação 
 
 Pense que nos criptossistemas, por exemplo, a aritmética modular é a operação central na sua grande maioria. E muitos dos sistemas criptográficos requerem multiplicações modulares para gerar chaves privadas, fazendo o uso de exponenciação modular de grandes números para criptografar dados, o que é um processo lento por si só devido a repetição de muitas multiplicações. Agora imagine se a eficiência da operação é baixa... Complicado, não?
 
-É por isso que muitas companias como a Intel utilizam o algoritmo de Karatsuba, pois ele foi desenvolvido para aumentar a eficiência e simplificar a multiplicação - principalmente para números grandes. Um breve *background* do algoritmo é que ele foi desenvolvido em 1960 por Anatoly Karatsuba, um matemático que nasceu na União Soviética (<a href="https://www.youtube.com/watch?v=U06jlgpMtQs"> Importante </a>) e que morreu em 2008, tendo trabalhado principalmente nos campos da teoria analítica de número e nas séries de Dirichlet (não se preocupe com o que é, só por ter um nome difícil já é legal).
+É por isso que muitas companhias como a Intel utilizam o algoritmo de Karatsuba, pois ele foi desenvolvido para aumentar a eficiência e simplificar a multiplicação - **principalmente para números grandes** (a essa altura você já deve ter entendido isso). Um breve *background* do algoritmo é que ele foi desenvolvido em 1960 por Anatoly Karatsuba, um matemático que nasceu na União Soviética (<a href="https://www.youtube.com/watch?v=U06jlgpMtQs"> Importante </a>) e que morreu em 2008, tendo trabalhado principalmente nos campos da teoria analítica de número e nas séries de Dirichlet (não se preocupe com o que é, só por ter um nome difícil já é legal).
 
 
 Como o algoritmo funciona?
@@ -175,18 +174,18 @@ Já falamos que o algoritmo de Karatsuba serve para simplificar a multiplicaçã
 Antes de começar tome uma água. As contas não vão ser extremamente complicadas. Mas tome uma água, é importante :) 
 !!!
 
-Primeiro, precisamos deixar claro que o algoritmo de Karatsuba é um algoritmo de divisão e conquista assim como o merge sort, ou seja, para realizar a multiplicação, o algoritmo:
+Primeiro, precisamos deixar claro que o algoritmo de Karatsuba é um algoritmo de divisão e conquista assim como o *merge sort*, ou seja, para realizar a multiplicação, o algoritmo:
 
 1. Divide os números que irá multiplicar em números menores.
 2. Faz uma árvore recursiva com esses números e vai multiplicando.
-3. E no final soma aplica pela última vez o algoritmo de Karatsuba para os últimos valores do topo do árvore.
+3. E no final aplica pela última vez o algoritmo de Karatsuba para os últimos valores do topo do árvore.
 
-Então vamos começar pelo primeiro passo, dividindo os números que serão multiplicados. Nesse caso para multiplicar $143721 * 273123$, iremos dividir da seguinte forma:
+Então vamos começar pelo primeiro passo, dividindo os números que serão multiplicados. Nesse caso para multiplicar $143721.273123$, iremos dividir da seguinte forma:
 
-* x = 143721 e o número pode ser dividido em duas partes: a e b.
-* y = 273123 e o número pode ser dividido em duas partes: c e d.
+* X = 143721 e o número pode ser dividido em duas partes: a e b.
+* Y = 273123 e o número pode ser dividido em duas partes: c e d.
 
-O que pode ser ilustrado na figura abaixo:
+Para ficar mais claro, visualmente seria isso:
 
 ![](KaratsubaNum.jpeg)
 
@@ -197,16 +196,16 @@ Como a gente pode ver pela figura acima, separamos os dois termos que estão sen
 - $C = 273$
 - $D = 123$
 
-Logo, tendo os números separados dessa maneira, temos os termos separados para realizarmos as operações necessárias. Além disso, sabemos que:
+Assim, com essa separação, temos os termos necessários para seguir com o método de Karatsuba. Além disso, sendo $n$ o número de dígitos, sabemos que os números $X$ e $Y$ podem ser representados da seguinte maneira:
 
 - x = $A.10^{(n/2)} + B$
 - y = $C.10^{(n/2)} + D$
 
-E, com isso, $x.y$ (que é o que queremos calcular, certo?) seria a multiplicação desses dois termos, resultando na **Equação Fundamental de Karatsuba (EFK)** (a gente inventou esse nome, mas isso vai facilitar muito o processo daqui para frente):
+E, com isso, $X.Y$ (que é o que queremos calcular, certo?) seria a multiplicação desses dois termos que foram representados acima, resultando na **Equação Fundamental de Karatsuba (EFK)** (a gente inventou esse nome, mas isso vai facilitar muito o processo daqui para frente):
 
-- $= A.C.10^{2.(n/2)} + (A.D + B.C).10^{n/2} + B.D$
+- $EFK = A.C.10^{2.(n/2)} + (A.D + B.C).10^{n/2} + B.D$
 
-Eu sei... É bastante coisa, mas dá para ver que não é complicado(....né?). Bom, os próximos passos são um pouco mais complexos e exigem mais atenção, então pega aquela 7 Bello e dá uma boa olhada no que vem por aí. 
+Eu sei... É bastante coisa, mas dá para ver que não é complicado (....né?). Bom, os próximos passos são um pouco mais complexos e exigem mais atenção, então pega aquela 7 Bello e dá uma boa olhada no que vem por aí. 
 
 ??? Checkpoint
 
@@ -235,7 +234,8 @@ Agora sim! Tudo pronto, certo?
 
 Errado! Na verdade o **lema número 1 do Karatsuba** é: Jamais multiplicarás números de 2 ou mais dígitos.
 
-Logo, teremos que realizar mais Karatsubas com todos os 3 ramos gerados e seus subsequentes até atingir uma multiplicação entre 2 números de {red} (1 dígito) e, já que é um algoritmo de divisão e conquista, isso implicará um código que utilizará regressão. 
+Logo, teremos que realizar mais Karatsubas com todos os 3 ramos gerados e seus subsequentes até atingir uma multiplicação entre 2 números de 
+{red}(1 dígito) e, já que é um algoritmo de divisão e conquista, isso implicará um código que utilizará regressão. 
 
 :::
 
@@ -271,18 +271,19 @@ Logo, após todos esses exercícios, podemos, finalmente, obter a árvore final 
 
 É... pois é, é bastante coisa. Porém, tudo isso fica muito mais simples quando começamos a codar e deixar o computador fazer! ;)
 
-Qual a complexidade do algoritmo?
+
+Karatsuba em código
 ---------
 
 No bloco anterior você aprendeu e deduziu a fórmula do Karatsuba. Agora, como seria isso em código?
 
 !!! Aviso
-Calma, calma, você não terá que fazer isso do 0. Seguindo os passos do Handout, você irá conseguir :).
+Calma, calma, seguindo os passos do Handout, você irá conseguir :).
 !!!
 
 Vimos que o primeiro passo era dividir quem iremos multiplicar em números menores. Sendo assim, precisaremos ir dividindo os números na função até que eles sejam menores que 10, ou seja, possuam um único dígito para multiplicarmos.
 
-Mas antes de fazermos isso, precisaremos determinar quantos dígitos tem os números digitados.
+Mas antes de fazermos isso, precisaremos determinar quantos dígitos têm os números digitados que serão multiplicados.
 
 ??? Checkpoint
 
@@ -291,9 +292,7 @@ Implemente uma função em C, a `md getSize(long num)` que recebe um número do 
 ::: Gabarito
 ``` c
 #include <stdio.h>
-#include <math.h>
 
-// Get size of the numbers
 int getSize(long num)
 {
     int count = 0;
@@ -325,7 +324,7 @@ Se você esqueceu a condição de parada, volte ao início desse bloco.
 
 long karatsuba(long X, long Y)
 {
-    // Base Case
+    // Caso base
     if (X < 10 && Y < 10)
         return X * Y;
 
@@ -356,32 +355,36 @@ Você fez mesmo a função? Se não conseguiu entender, vamos por partes:
 
 **O n é exatamente o maior tamanho dos dígitos dentre os dois números dividido por 2.**
 
-* Por que o maior tamanho dos dígitoa entre os dois números?
+* Por que o maior tamanho dos dígitos entre os dois números?
 Para não perder valores e garantir que estaremos fazendo o karatsuba com todos os dígitos de um número. Dessa forma, imagine que vamos multiplicar 13 e 5200000. Se pegássemos o número de dígitos do 13, que é 2, quando fóssemos dividir os números em partes menores (principalmente o 5200000) teríamos problemas.
 
 * Por que dividido por 2?
 
-Pois na fórmula temos que os dois 10 que aparecem estão elevados a $n/2$. Então isso já ajuda a deixar mais compacto e com menos variáveis na conta final, melhorando a sua vizualização :).
+Pois na fórmula, temos que os dois 10 que aparecem estão elevados a $n/2$. Então isso já ajuda a deixar mais compacto e com menos variáveis na conta final, melhorando a sua vizualização :).
 
 
 ::: Gabarito do gabarito
 ``` c
+#include <math.h>
+
 
 long karatsuba(long X, long Y)
 {
-    // Base Case
+    // Caso base
     if (X < 10 && Y < 10)
         return X * Y;
 
-    // Recur until base case
+    // Faz as recursões até o caso base
     int n = (int)(size / 2.0);
+
+    ...
 
     long ac = karatsuba(a, c);
     long bd = karatsuba(b, d);
     long e = karatsuba(a + b, c + d) - ac - bd;
 
-    // return the equation
-    return (long)(pow(10 * 1L, 2 * n) * ac + pow(10 * 1L, n) * e + bd);
+    // Retorna a equação
+    return (long)(pow(10, 2 * n) * ac + pow(10, n) * e + bd);
 
 }
 
@@ -396,7 +399,7 @@ A única coisa que falta agora em nossa função é determinar os termos que apa
 
 ??? Checkpoint
 
-Por último, implemente em c as definições dos termos $a$, $b$, $c$ e $d$.
+Por último, implemente em C as definições dos termos $a$, $b$, $c$ e $d$.
 
 !!! Dica
 Sempre que você for dividindo os números pela metade, pode fazer uso da potência de 10...
@@ -408,14 +411,14 @@ Sempre que você for dividindo os números pela metade, pode fazer uso da potên
 
 long karatsuba(long X, long Y)
 {
-    // Base Case
+    // Caso base
     if (X < 10 && Y < 10)
         return X * Y;
 
-    // determine the size of X and Y
+    // Determine o tamanho de X e Y
     int size = fmax(getSize(X), getSize(Y));
 
-    // Split X and Y
+    // Separa o X do Y
     int n = (int)(size / 2.0);
     long p = (long)pow(10, n);
     long a = (long)(X / (double)p);
@@ -423,13 +426,13 @@ long karatsuba(long X, long Y)
     long c = (long)(Y / (double)p);
     long d = Y % p;
 
-    // Recur until base case
+    // Faz as recursões até o caso base
     long ac = karatsuba(a, c);
     long bd = karatsuba(b, d);
     long e = karatsuba(a + b, c + d) - ac - bd;
 
-    // return the equation
-    return (long)(pow(10 * 1L, 2 * n) * ac + pow(10 * 1L, n) * e + bd);
+    // Retorna a equação
+    return (long)(pow(10, 2 * n) * ac + pow(10, n) * e + bd);
 }
 
 ``` 
@@ -438,16 +441,18 @@ long karatsuba(long X, long Y)
 
 ???
 
-Agora que já temos o código do algoritmo de karatsuba podemos fazer um dos exercícios que você mais gosta : calcular a complexidade do código. Não é muito diferente do que já fizemos em aula. Antes de continuar, uma frase para motivá-lo:
+Agora que já temos o código do algoritmo de Karatsuba, podemos fazer um dos exercícios que você mais gosta : calcular a complexidade do código. Não é muito diferente do que já fizemos em aula. Antes de continuar, uma frase para motivá-lo:
 
 *"As a programmer, never underestimate your ability to come up with ridiculously complex solutions for simple problems." FUCHS, Thomas.* 
 
 ![](smart_cat.gif)
 
-E é por isso que é sempre bom nos atentarmos a complexidade das nossas soluções e dos algoritmos que vamos usar. Claro que não apenas isso, mas não deixa de ser uma parte bem importante :)
+E é por isso que é sempre bom nos atentarmos a complexidade das nossas soluções e dos algoritmos que vamos usar. Claro que não apenas isso, mas não deixa de ser uma parte bem importante...
 
 Calculando a Complexidade
 ------
+
+Você deve estar se perguntando: "Ok ok, entendi que simplifica as multiplicações, mas quanto? A complexidade cai bastante?". É isso que vamos responder aqui, ou melhor, você vai.
 
 Como já vimos em aulas passadas, com algoritmos com recursão, é preciso fazer a árvore de recursões para entender a complexidade. 
 
@@ -462,7 +467,7 @@ Lembre-se de pensar em cada uma das três recursões, e a complexidade na "volta
 
 ![](arvRecursao.png)
 
-Em cada degrau da árvore, temos três ramos que indicam as recursões, onde cada uma é **f(*degrau anterior*/2)**, e um ramo que representa o que acontece na *volta*, ou seja, a conta que "junta" tudo. Nesse ramo da volta, a complexidade é o próprio ***degrau anterior*/2**.
+Em cada degrau da árvore, temos três ramos que indicam as recursões, onde cada uma é **f(*número de dígitos*/2)**, e um ramo que representa o que acontece na *volta*, ou seja, a conta que "junta" tudo. Nesse ramo da volta, a complexidade é o próprio ***número de dígitos*/2**.
 
 Para ilustrar, veja o degrau de *f(n/2)* e seus ramos. Cada ramo  é *f(n/4)*, e o ramo de volta é o próprio *n/2*.
 
@@ -479,7 +484,7 @@ Vamos resolver passo a passo:
 
 **Passo 1:**
 
-Primeiro é importante identificar a altura de nossa árvore. Como n vai reduzindo dividindo por 2, sabemos que a altura será **$log_2(n)$**.
+Primeiro é importante identificar a altura de nossa árvore. Como $n$ vai reduzindo sendo dividido por 2, sabemos que a altura será **$log_2(n)$**.
 
 * [[x = $log_2n$]]
 
@@ -525,20 +530,27 @@ $\frac{n^{log_{2}{3}}}{n} - 1$
 ${n}\cdot{\frac{\frac{n^{log_{2}{3}}}{n} - 1}{\frac{1}{2}}}$ --->
 ${n}\cdot{(\frac{n^{log_{2}{3}}}{n} - 1)}\cdot{2}$ --->
 ${(\frac{n^{log_{2}{3}}}{n}\cdot{n} - {1}\cdot{n})}\cdot{2}$ --->
-$n^{log_{2}{3}} - 2n$
+$2n^{log_{2}{3}} - 2n$
 
 Após todas essa opreações, ficamos com a equação final assim:
 
-[[$n^{log_{2}{3}} - 2n$]]
+[[$2n^{log_{2}{3}} - 2n$]]
 
-Porém, ainda não acabamos. Como vocês sabem, para calcular a complexidade mesmo, precisamos considerar o pior caso possível. Então, apesar de termos o termo $2n$, não será ele que vamos considerar. O termo que vamos considerar é o $n^{log_{2}{3}}$.
+Porém, ainda não acabamos. Como vocês sabem, para calcular a complexidade mesmo, precisamos considerar o pior caso possível. Então, apesar de termos o termo $n$, não será ele que vamos considerar. O termo que vamos considerar é o $n^{log_{2}{3}}$.
 
 Portanto, a complexidade do algoritmo é ***$O(n^{log_{2}{3}})$***.
 ???
 
-Agora sabemos a complexidade do algorimto, mas por que ele é melhor que o método normal de multiplicação? Já que $log_23$ é igual a aproximadamente 1.5849, podemos escrever a complaxidade do Karatsuba como *$O(n^{1.59})$*. 
+Agora sabemos a complexidade do algorimto, mas por que ele é melhor que o método normal de multiplicação? Já que $log_23$ é igual a aproximadamente 1,5849, podemos escrever a complexidade do Karatsuba como *$O(n^{1.59})$*. 
 
 A complexidade do método normal é ***$O(n^2)$***, enquanto a complexidade do algoritmo Karatsuba é ***$O(n^{1.59})$***, e portanto, é mais eficiente! Não é uma melhora tão grande, já que existem algoritmos mais recentes e mais eficientes que também realizam multiplicação. Porém, considerando a data que foi desenvolvido e sua complexidade, o algoritmo Karatsuba, sem dúvidas, é um algoritmo que vale a pena estudar!
+
+Fake Quiz e Desafios
+------
+
+Essas serão cenas dos próximos capítulos...
+
+![](hardworking_cat.gif)
 
 <!-- 
 Você também pode criar
