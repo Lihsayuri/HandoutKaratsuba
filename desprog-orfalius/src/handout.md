@@ -1,6 +1,16 @@
 O algoritmo de Karatsuba
 ======
 
+Introdução (expositiva)
+---------
+
+
+Muitos dos processos computacionais utilizam multiplicação, principalmente com números **grandes** - e grandes mesmo, na casa de bilhões de casas. É isso que acontece em muitas aplicações de processamento de sinais que são correlação, convolução, análise de frequência, processamento de imagem, etc.Além disso, a eficiência de multiplicações é uma base para implementação de moduladores, criptossistemas e até mesmo para a ULA (Unidade Lógica Aritmética) que vimos na matéria de Elementos de Sistemas... Você lembra, né? **NÉ?** (Diga sim, deixe o Corsi feliz :) ).
+
+Pense que nos criptossistemas, por exemplo, a aritmética modular é a operação central na sua grande maioria. E muitos dos sistemas criptográficos requerem multiplicações modulares para gerar chaves privadas, fazendo o uso de exponenciação modular de grandes números para criptografar dados, o que é um processo lento por si só devido a repetição de muitas multiplicações. Agora imagine se a eficiência da operação é baixa... Complicado, não? Hoje vamos ver uma técnica que foi utilizada por muitas empresas, como a Intel, e que é mais eficiente para realizar multiplicações 
+-**principalmente para números grandes** (a essa altura você já deve ter entendido isso).
+
+
 Ideia inicial
 ---------
 
@@ -9,14 +19,20 @@ você aprendeu no ensino fundamental e a maneira que resolveria uma multiplicaç
 
 :mult_ingenua
 
-Essa técnica também é conhecida como método ingênuo (ou *"Naive Approach"* em inglês), na qual mutiplicamos cada dígito do multiplicador pelo multiplicando.
+Essa técnica também é conhecida como método ingênuo (ou *"Naive Approach"* em inglês), na qual mutiplicamos cada dígito do multiplicador pelo multiplicando. 
 E a cada linha da multiplicação nós adicionamos zeros, continuamos multiplicando dígito a dígito, até que no final somamos todas as linhas.
 
 Assim, para o caso anterior, para multiplicar um número de três dígitos por outro número de três dígitos realizamos 9 multiplicações individuais.
 
+
+
 ??? Checkpoint
 
 Se você tivesse que implementar a multiplicação desse método ingênuo em forma de programação, como faria?
+
+- Lembra de Elementos de Sistemas? Para implementar uma multiplicação simples (de um único dígito), em Assembly nós realizávamos várias somas. Agora pense que você possui a multiplicação de um único dígito disponível, mas precisa mutiplicar vários dígitos...
+- Lembre-se: dois números podem ser representados por **VETORES**. Mas por quê? Pense na maneira nua e crua de implementar uma multiplicação. Queremos multiplicar dígito a dígito...
+
 
 !!! Aviso
 Você não precisa implementar o código de fato, apenas pense em sua estrutura e depois confira a resposta.
@@ -25,13 +41,13 @@ Observação: não se preocupe com os *carries* (famosos "sobe 1") e nem com os 
 !!!
 
 ::: Gabarito
-Você provavelmente deve ter pensando em duas estruturas de loop: uma estrutura de loop externa que vai passando para a próximo dígito conforme os dígitos do multiplicando vão sendo multiplicados, e outra interna que vai passando dígito a dígito pelos dígitos do multiplicador.
+Você provavelmente deve ter pensando em duas estruturas de loop: uma estrutura de loop externa que vai passando para a próximo dígito conforme os dígitos do multiplicando vão sendo multiplicados, e outra interna que vai passando dígito a dígito pelos dígitos do multiplicador. E isso feito com um vetor, assim, se fôssemos multiplicar 123 por 456, por exemplo, teríamos a = {1, 2, 3} e b = {4, 5, 6} e o primeiro loop passaria multiplicando 4, 5, 6 por 3.
 :::
 
 ???
 
 
-Dessa forma, a estrutura de código seria de maneira geral organizada dessa forma com dois loops:
+Dessa forma, como descrito anteriormente, a estrutura de código seria de maneira geral organizada como vetores e com dois loops, dessa forma:
 
 ``` c
 for (int i = 0; i < n; i++){
@@ -69,6 +85,10 @@ Por fim, soma retornaria: 56088.
 
 Nesse método tradicional, se nós multiplicamos dois números de n dígitos, qual seria a sua complexidade?
 
+!!! Aviso
+Não precisa resolver a conta, reflita sobre o código que você acabou de pensar. Dois loops... (ok, chega de dica!)
+!!!
+
 ::: Gabarito
 
 Uma das formas de pensar é: 
@@ -76,6 +96,8 @@ Uma das formas de pensar é:
 Como visto no caso anterior, multiplicando dois números de três dígitos foram necessárias 9 multiplicações individuais. Logo,
 ao multiplicar dois números de n dígitos, teremos n² multiplicações individuais. Dessa forma, a complexidade desse método é
 de $O(n²)$.
+
+::: Resolução opcional (depois de terminar o Handout, se quiser ver, está aqui a resolução matemática detalhada)
 
 Mas caso você não esteja acreditando ("Tenha fé" HASHIMOTO, Marcelo), resolvendo a complexidade do código mostrado acima temos:
 
@@ -154,15 +176,8 @@ Logo a complexidade seria de $O(n²)$.
 
 ???
 
-E como vimos em aula, uma complexidade quadrática é algo que queremos evitar, sendo pior que a complexidade linear, logarítmica, e constante.
-
-Isso porque, imagine alguns dos processos que utilizam da multiplicação, principalmente com números grandes. Ou melhor imagine multiplicar milhões de dígitos por
-milhões de dígitos. É isso que acontece em muitas aplicações de processamento de sinais que são correlação, convolução, análise de frequência, processamento de imagem, etc.
-Além disso, a eficiência de multiplicações é uma base para implementação de moduladores, criptossistemas e até mesmo para a ULA (Unidade Lógica Aritmética) que vimos na matéria de Elementos de Sistemas... Você lembra, né? 
-
-Pense que nos criptossistemas, por exemplo, a aritmética modular é a operação central na sua grande maioria. E muitos dos sistemas criptográficos requerem multiplicações modulares para gerar chaves privadas, fazendo o uso de exponenciação modular de grandes números para criptografar dados, o que é um processo lento por si só devido a repetição de muitas multiplicações. Agora imagine se a eficiência da operação é baixa... Complicado, não?
-
-É por isso que muitas companhias como a Intel utilizam o algoritmo de Karatsuba, pois ele foi desenvolvido para aumentar a eficiência e simplificar a multiplicação - **principalmente para números grandes** (a essa altura você já deve ter entendido isso). Um breve *background* do algoritmo é que ele foi desenvolvido em 1960 por Anatoly Karatsuba, um matemático que nasceu na União Soviética (<a href="https://www.youtube.com/watch?v=U06jlgpMtQs"> Importante </a>) e que morreu em 2008, tendo trabalhado principalmente nos campos da teoria analítica de número e nas séries de Dirichlet (não se preocupe com o que é, só por ter um nome difícil já é legal).
+Como vimos em aula, uma complexidade quadrática é algo que queremos evitar, sendo pior que a complexidade linear, logarítmica, e constante.
+E é aí que entra o algoritmo de Karatsuba. Ele não é o melhor algoritmo de todos para diminuir a complexidade de multiplicações, já que existem outros algoritmos como o de Toom-Cook e o Schönhage–Strassen, que são mais rápidos (<a href="https://en.wikipedia.org/wiki/Karatsuba_algorithm"> Karatsuba Wikipedia </a>). Mas né, vamos dar um desconto, foi desenvolvido em 1960 por Anatoly Karatsuba, um matemático que nasceu na União Soviética (<a href="https://www.youtube.com/watch?v=U06jlgpMtQs"> Importante </a>) e que morreu em 2008, tendo trabalhado principalmente nos campos da teoria analítica de número e nas séries de Dirichlet (não se preocupe com o que é, só por ter um nome difícil já é legal).
 
 
 Como o algoritmo funciona?
@@ -271,15 +286,169 @@ Logo, após todos esses exercícios, podemos, finalmente, obter a árvore final 
 
 É... pois é, é bastante coisa. Porém, tudo isso fica muito mais simples quando começamos a codar e deixar o computador fazer! ;)
 
+Para facilitar a sua vida e deixar mais visual - *programicamente* falando, se é que você me entende -  aqui está o código do Karatsuba implementado em C (se ficou curioso para entender os detalhes do código, quando terminar o Handout faça a sessão extra). Você provavelmente vai precisar para o próximo bloco...
 
-Karatsuba em código
----------
+
+``` c
+
+#include <math.h>
+#include <stdio.h>
+
+int getSize(long num)
+{
+    int count = 0;
+    while (num > 0)
+    {
+        count++;
+        num /= 10;
+    }
+    return count;
+}
+
+long karatsuba(long X, long Y)
+{
+    // Caso base
+    if (X < 10 && Y < 10)
+        return X * Y;
+
+    // Determine o tamanho de X e Y
+    int size = fmax(getSize(X), getSize(Y));
+
+    // Separa o X do Y e define quem é o a, o b, o c e o d
+    int n = (int)(size / 2.0);
+    long p = (long)pow(10, n);
+    long a = (long)(X / (double)p);
+    long b = X % p;
+    long c = (long)(Y / (double)p);
+    long d = Y % p;
+
+    // Faz as recursões até o caso base como foi descrito na sessão anterior
+    long ac = karatsuba(a, c); 
+    long bd = karatsuba(b, d);
+    long e = karatsuba(a + b, c + d) - ac - bd;
+
+    // Retorna a equação
+    return (long)(pow(10, 2 * n) * ac + pow(10, n) * e + bd);
+}
+
+``` 
+
+
+Calculando a Complexidade
+------
+
+
+Já que temos o código do algoritmo de Karatsuba e você já entendeu a lógica de como ele funciona, podemos fazer um dos exercícios que você mais gosta : calcular a complexidade do código. Não é muito diferente do que já fizemos em aula. Antes de continuar, uma frase para motivá-lo:
+
+*"As a programmer, never underestimate your ability to come up with ridiculously complex solutions for simple problems." FUCHS, Thomas.* 
+
+![](smart_cat.gif)
+
+E é por isso que é sempre bom nos atentarmos a complexidade das nossas soluções e dos algoritmos que vamos usar. Claro que não apenas isso, mas não deixa de ser uma parte bem importante...
+
+Agora, você deve estar se perguntando: "Ok ok, entendi que simplifica as multiplicações e que a complexidade vai melhorar, mas quanto? Ela cai bastante?". É isso que vamos responder aqui, ou melhor, você vai.
+
+Como já vimos em aulas passadas, com algoritmos com recursão, é preciso fazer a árvore de recursões para entender a complexidade. 
+
+??? Checkpoint
+Usando os conceitos já aprendidos nessa disciplina, desenvolva a árvore de recursão do algoritmo Karatsuba a partir do código desenvolvido anteriormente.
+
+!!! Dica
+Lembre-se de pensar em cada uma das três recursões, e a complexidade na "volta" das recursões!
+!!!
+
+::: Gabarito
+
+![](arvRecursao.png)
+
+Em cada degrau da árvore, temos três ramos que indicam as recursões, onde cada uma é **f(*número de dígitos*/2)**, e um ramo que representa o que acontece na *volta*, ou seja, a conta que "junta" tudo. Nesse ramo da volta, a complexidade é o próprio ***número de dígitos*/2**.
+
+Para ilustrar, veja o degrau de *f(n/2)* e seus ramos. Cada ramo  é *f(n/4)*, e o ramo de volta é o próprio *n/2*.
+
+:::
+???
+
+Sabendo a árvore de recursão, podemos usá-la para calcular a complexidade inteira. Prepare-se que vamos usar um pouco daquela *matemágica*!
+
+??? Checkpoint
+Tente calcular a complexidade do algoritmo do Karatsuba. Revise o material no <a href=https://ensino.hashi.pro.br/desprog/resumo/analise/caixa.html> site da disciplina</a> em caso de dúvidas. 
+
+::: Gabarito
+Vamos resolver passo a passo:
+
+**Passo 1:**
+
+Primeiro é importante identificar a altura de nossa árvore. Como $n$ vai reduzindo sendo dividido por 2, sabemos que a altura será **$log_2(n)$**.
+
+* [[x = $log_2n$]]
+
+**Passo 2:**
+
+O próximo passo é identificar o padrão do retorno da recursão (os passos em {red}(vermelho) na figura anterior). Não podemos esquecer que, para não deixar a imagem muito poluída, não foram mostradas as recursões dos dois ramos do meio, mas ainda temos ramos {red}("vermelhos") neles. Essa próxima imagem mostra a lógica apenas desses ramos:
+
+![](arvRecursao2.png)
+
+Começamos com 1 vez n ([[{red}(n)]]), depois temos 3 vezes n/2 ([[{red}(3n/2)]]), no próximo 9 vezes n/4 ([[{red}(9n/4)]]) ...
+
+Seguindo esse padrão, temos uma **progressão geométrica**, com a raiz sendo 3/2! Assim:
+
+* [[q = 3/2]]
+
+Tendo essas informações, podemos usar a fórmula de complexidade para PGs:
+
+* ${a1}\cdot{\frac{q^x - 1}{q-1}}$
+
+Onde:
+* $a1$ é o primeiro elemento;
+* $q$ é a razão;
+* $x$ é o número de elementos;
+
+**Passo 3:**
+
+Agora, basta substituir na equação os valores que já conhecemos:
+
+${n}\cdot{\frac{\frac{3}{2}^{log_{2}n} - 1}{\frac{3}{2}-1}}$
+
+Usando algumas transformações matemáticas e ferramentas que estão no site da disciplina:
+
+{red}(*focando no numerador da fração:*)
+
+$\frac{3}{2}^{log_{2}n} - 1$ --->
+$\frac{3^{log_2n}}{2^{log_2n}} - 1$ --->
+$\frac{3^{\frac{log_3n}{log_{3}2}}}{n} - 1$ --->
+$\frac{n^{\frac{1}{log_{3}2}}}{n} - 1$ --->
+$\frac{n^{log_{2}{3}}}{n} - 1$
+
+{red}(*operações matemáticas com toda a equação:*)
+
+${n}\cdot{\frac{\frac{n^{log_{2}{3}}}{n} - 1}{\frac{1}{2}}}$ --->
+${n}\cdot{(\frac{n^{log_{2}{3}}}{n} - 1)}\cdot{2}$ --->
+${(\frac{n^{log_{2}{3}}}{n}\cdot{n} - {1}\cdot{n})}\cdot{2}$ --->
+$2n^{log_{2}{3}} - 2n$
+
+Após todas essa opreações, ficamos com a equação final assim:
+
+[[$2n^{log_{2}{3}} - 2n$]]
+
+Porém, ainda não acabamos. Como vocês sabem, para calcular a complexidade mesmo, precisamos considerar o pior caso possível. Então, apesar de termos o termo $n$, não será ele que vamos considerar. O termo que vamos considerar é o $n^{log_{2}{3}}$.
+
+Portanto, a complexidade do algoritmo é ***$O(n^{log_{2}{3}})$***.
+???
+
+Agora sabemos a complexidade do algorimto, mas por que ele é melhor que o método normal de multiplicação? Já que $log_23$ é igual a aproximadamente 1,5849, podemos escrever a complexidade do Karatsuba como *$O(n^{1.59})$*. 
+
+A complexidade do método normal é ***$O(n^2)$***, enquanto a complexidade do algoritmo Karatsuba é ***$O(n^{1.59})$***, e portanto, é mais eficiente! Não é uma melhora tão grande, já que existem algoritmos mais recentes e mais eficientes que também realizam multiplicação. Porém, considerando a data que foi desenvolvido e sua complexidade, o algoritmo Karatsuba, sem dúvidas, é um algoritmo que vale a pena estudar!
+
+
+Desafio/ Sessão extra
+-------
+
+!!! Aviso
+Se você já terminou as sessões anteriores e ficou curioso para saber como se implementa o código, então aqui está uma sessão extra para entender a lógica do código. Apenas se já terminou, priorize as outras sessões.  
+!!!
 
 No bloco anterior você aprendeu e deduziu a fórmula do Karatsuba. Agora, como seria isso em código?
 
-!!! Aviso
-Calma, calma, seguindo os passos do Handout, você irá conseguir :).
-!!!
 
 Vimos que o primeiro passo era dividir quem iremos multiplicar em números menores. Sendo assim, precisaremos ir dividindo os números na função até que eles sejam menores que 10, ou seja, possuam um único dígito para multiplicarmos.
 
@@ -441,111 +610,9 @@ long karatsuba(long X, long Y)
 
 ???
 
-Agora que já temos o código do algoritmo de Karatsuba, podemos fazer um dos exercícios que você mais gosta : calcular a complexidade do código. Não é muito diferente do que já fizemos em aula. Antes de continuar, uma frase para motivá-lo:
 
-*"As a programmer, never underestimate your ability to come up with ridiculously complex solutions for simple problems." FUCHS, Thomas.* 
 
-![](smart_cat.gif)
-
-E é por isso que é sempre bom nos atentarmos a complexidade das nossas soluções e dos algoritmos que vamos usar. Claro que não apenas isso, mas não deixa de ser uma parte bem importante...
-
-Calculando a Complexidade
-------
-
-Você deve estar se perguntando: "Ok ok, entendi que simplifica as multiplicações, mas quanto? A complexidade cai bastante?". É isso que vamos responder aqui, ou melhor, você vai.
-
-Como já vimos em aulas passadas, com algoritmos com recursão, é preciso fazer a árvore de recursões para entender a complexidade. 
-
-??? Checkpoint
-Usando os conceitos já aprendidos nessa disciplina, desenvolva a árvore de recursão do algoritmo Karatsuba a partir do código desenvolvido anteriormente.
-
-!!! Dica
-Lembre-se de pensar em cada uma das três recursões, e a complexidade na "volta" das recursões!
-!!!
-
-::: Gabarito
-
-![](arvRecursao.png)
-
-Em cada degrau da árvore, temos três ramos que indicam as recursões, onde cada uma é **f(*número de dígitos*/2)**, e um ramo que representa o que acontece na *volta*, ou seja, a conta que "junta" tudo. Nesse ramo da volta, a complexidade é o próprio ***número de dígitos*/2**.
-
-Para ilustrar, veja o degrau de *f(n/2)* e seus ramos. Cada ramo  é *f(n/4)*, e o ramo de volta é o próprio *n/2*.
-
-:::
-???
-
-Sabendo a árvore de recursão, podemos usá-la para calcular a complexidade inteira. Prepare-se que vamos usar um pouco daquela *matemágica*!
-
-??? Checkpoint
-Tente calcular a complexidade do algoritmo do Karatsuba. Revise o material no <a href=https://ensino.hashi.pro.br/desprog/resumo/analise/caixa.html> site da disciplina</a> em caso de dúvidas. 
-
-::: Gabarito
-Vamos resolver passo a passo:
-
-**Passo 1:**
-
-Primeiro é importante identificar a altura de nossa árvore. Como $n$ vai reduzindo sendo dividido por 2, sabemos que a altura será **$log_2(n)$**.
-
-* [[x = $log_2n$]]
-
-**Passo 2:**
-
-O próximo passo é identificar o padrão do retorno da recursão (os passos em {red}(vermelho) na figura anterior). Não podemos esquecer que, para não deixar a imagem muito poluída, não foram mostradas as recursões dos dois ramos do meio, mas ainda temos ramos {red}("vermelhos") neles. Essa próxima imagem mostra a lógica apenas desses ramos:
-
-![](arvRecursao2.png)
-
-Começamos com 1 vez n ([[{red}(n)]]), depois temos 3 vezes n/2 ([[{red}(3n/2)]]), no próximo 9 vezes n/4 ([[{red}(9n/4)]]) ...
-
-Seguindo esse padrão, temos uma **progressão geométrica**, com a raiz sendo 3/2! Assim:
-
-* [[q = 3/2]]
-
-Tendo essas informações, podemos usar a fórmula de complexidade para PGs:
-
-* ${a1}\cdot{\frac{q^x - 1}{q-1}}$
-
-Onde:
-* $a1$ é o primeiro elemento;
-* $q$ é a razão;
-* $x$ é o número de elementos;
-
-**Passo 3:**
-
-Agora, basta substituir na equação os valores que já conhecemos:
-
-${n}\cdot{\frac{\frac{3}{2}^{log_{2}n} - 1}{\frac{3}{2}-1}}$
-
-Usando algumas transformações matemáticas e ferramentas que estão no site da disciplina:
-
-{red}(*focando no numerador da fração:*)
-
-$\frac{3}{2}^{log_{2}n} - 1$ --->
-$\frac{3^{log_2n}}{2^{log_2n}} - 1$ --->
-$\frac{3^{\frac{log_3n}{log_{3}2}}}{n} - 1$ --->
-$\frac{n^{\frac{1}{log_{3}2}}}{n} - 1$ --->
-$\frac{n^{log_{2}{3}}}{n} - 1$
-
-{red}(*operações matemáticas com toda a equação:*)
-
-${n}\cdot{\frac{\frac{n^{log_{2}{3}}}{n} - 1}{\frac{1}{2}}}$ --->
-${n}\cdot{(\frac{n^{log_{2}{3}}}{n} - 1)}\cdot{2}$ --->
-${(\frac{n^{log_{2}{3}}}{n}\cdot{n} - {1}\cdot{n})}\cdot{2}$ --->
-$2n^{log_{2}{3}} - 2n$
-
-Após todas essa opreações, ficamos com a equação final assim:
-
-[[$2n^{log_{2}{3}} - 2n$]]
-
-Porém, ainda não acabamos. Como vocês sabem, para calcular a complexidade mesmo, precisamos considerar o pior caso possível. Então, apesar de termos o termo $n$, não será ele que vamos considerar. O termo que vamos considerar é o $n^{log_{2}{3}}$.
-
-Portanto, a complexidade do algoritmo é ***$O(n^{log_{2}{3}})$***.
-???
-
-Agora sabemos a complexidade do algorimto, mas por que ele é melhor que o método normal de multiplicação? Já que $log_23$ é igual a aproximadamente 1,5849, podemos escrever a complexidade do Karatsuba como *$O(n^{1.59})$*. 
-
-A complexidade do método normal é ***$O(n^2)$***, enquanto a complexidade do algoritmo Karatsuba é ***$O(n^{1.59})$***, e portanto, é mais eficiente! Não é uma melhora tão grande, já que existem algoritmos mais recentes e mais eficientes que também realizam multiplicação. Porém, considerando a data que foi desenvolvido e sua complexidade, o algoritmo Karatsuba, sem dúvidas, é um algoritmo que vale a pena estudar!
-
-Fake Quiz e Desafios
+Fake Quiz
 ------
 
 Essas serão cenas dos próximos capítulos...
