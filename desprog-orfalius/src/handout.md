@@ -412,11 +412,30 @@ Agora, você deve estar se perguntando: "Ok ok, entendi que simplifica as multip
 Como já vimos em aulas passadas, com algoritmos com recursão, é preciso fazer a árvore de recursões para entender a complexidade. 
 
 ??? Checkpoint
-Vamos começar a pensar na árvore de recursão. Pensando no código e quantas recursões temos!
+
+Vamos começar a pensar na árvore de recursão. Pensando no código e quantas recursões temos, quantos degraus em cada iteração
  
 ::: Gabarito
 
-Como visto anteriormente, temos 3 recursões. Portanto nossa árvore de recursões terá
+Como visto anteriormente, temos 3 recursões. Portanto nossa árvore de recursões terá 4 ramos em cada iteração.
+
+:::
+???
+
+??? Checkpoint
+
+Agora, o próximo passo é pensar nas iterações! Pensando em como o algoritmo (baseado em *divisão e conquista*) trabalha com os números que recebe, escreva como fica a chamada das recursões depois da primeira chamada **f(n)**.
+
+::: Gabarito
+
+Como em cada iteração o algoritmo divide o tamanho do número que ele tem por 2, teremos 3 ramos de **f(n/2)**, e um ramo que é a volta da recursão (e faz a soma da etapa), como você viu anteriormente.
+
+:::
+???
+
+??? Checkpoint
+
+Por fim, tente fazer a árvore de recursão inteira agora que você sabe como cada iteração será!
 
 ::: Gabarito
 
@@ -432,18 +451,30 @@ Para ilustrar, veja o degrau de *f(n/2)* e seus ramos. Cada ramo  é *f(n/4)*, e
 Sabendo a árvore de recursão, podemos usá-la para calcular a complexidade inteira. Prepare-se que vamos usar um pouco daquela *matemágica*!
 
 ??? Checkpoint
-Tente calcular a complexidade do algoritmo do Karatsuba. Revise o material no <a href=https://ensino.hashi.pro.br/desprog/resumo/analise/caixa.html> site da disciplina</a> em caso de dúvidas. 
 
-::: Gabarito
-Vamos resolver passo a passo:
+Vamos calcular o algorítmo do Karatsuba passo a passo. 
+
+''' Dica
+Revise o material no <a href=https://ensino.hashi.pro.br/desprog/resumo/analise/caixa.html> site da disciplina</a> em caso de dúvidas.
+'''
 
 **Passo 1:**
+
+Vamos começar calculando a altura da árvore (denominaremos como x).
+
+::: Gabarito Passo 1
 
 Primeiro é importante identificar a altura de nossa árvore. Como $n$ vai reduzindo sendo dividido por 2, sabemos que a altura será **$log_2(n)$**.
 
 * [[x = $log_2n$]]
 
+:::
+
 **Passo 2:**
+
+Como vimos ao longo da matéria, para calcular a recursão precisamos saber qual é a complexidade do ramo referente ao *retorno da recursão*. Tente calcular isso agora, qual o padrão que o retorno das recursões seguem?
+
+::: Gabarito Passo 2
 
 O próximo passo é identificar o padrão do retorno da recursão (os passos em {red}(vermelho) na figura anterior). Não podemos esquecer que, para não deixar a imagem muito poluída, não foram mostradas as recursões dos dois ramos do meio, mas ainda temos ramos {red}("vermelhos") neles. Essa próxima imagem mostra a lógica apenas desses ramos:
 
@@ -464,7 +495,13 @@ Onde:
 * $q$ é a razão;
 * $x$ é o número de elementos;
 
+:::
+
 **Passo 3:**
+
+Finalmente já temos todas informações para calcular e simplificar a complexidade do algoritmo. Tente fazer essa parte sozinho, mas lembre-se de verificar o material da disciplina, especialmente as ferramentas matemáticas de manipulação de log! Esse é um passo mais demorado, mas não se preocupe, basta tomar cuidado nas contase ir com calma ;)!
+
+::: Gabarito Passo 3
 
 Agora, basta substituir na equação os valores que já conhecemos:
 
