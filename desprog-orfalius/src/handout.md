@@ -452,11 +452,11 @@ Calculando a Complexidade
 Como já vimos em aulas passadas, com algoritmos com recursão, é preciso fazer a árvore de recursões para entender a complexidade. 
 
 ??? Checkpoint
-Usando os conceitos já aprendidos nessa disciplina, desenvolva a árvore de recursão do algoritmo Karatsuba a partir do código desenvolvido anteriormente.
+Vamos começar a pensar na árvore de recursão. Pensando no código e quantas recursões temos!
+ 
+::: Gabarito
 
-!!! Dica
-Lembre-se de pensar em cada uma das três recursões, e a complexidade na "volta" das recursões!
-!!!
+Como visto anteriormente, temos 3 recursões. Portanto nossa árvore de recursões terá
 
 ::: Gabarito
 
