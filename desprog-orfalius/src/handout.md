@@ -189,56 +189,117 @@ Já falamos que o algoritmo de Karatsuba serve para simplificar a multiplicaçã
 Antes de começar tome uma água. As contas não vão ser extremamente complicadas. Mas tome uma água, é importante :) 
 !!!
 
-Primeiro, precisamos deixar claro que o algoritmo de Karatsuba é um algoritmo de divisão e conquista assim como o *merge sort*, ou seja, para realizar a multiplicação, o algoritmo:
+Primeiro, precisamos deixar claro que o algoritmo de Karatsuba é um algoritmo de divisão e conquista assim como o *merge sort*, ou seja, para realizar a multiplicação, o algoritmo divide um problema maior em problemas menores até atingir um problema de solução mais simples possível.
 
-1. Divide os números que irá multiplicar em números menores.
-2. Faz uma árvore recursiva com esses números e vai multiplicando.
-3. E no final aplica pela última vez o algoritmo de Karatsuba para os últimos valores do topo do árvore.
+??? Checkpoint
 
-Então vamos começar pelo primeiro passo, dividindo os números que serão multiplicados. Nesse caso para multiplicar $143721.273123$, iremos dividir da seguinte forma:
+Tendo em mente o que foi dito acima, pense em como você dividiria o problema da multiplicação entre dois números de 6 dígitos. Como torná-la mais fácil de trabalhar e dividir o problema em mais partes?
+
+**OBS:** Não tente pensar em nada muito complexo, a resposta pode ser mais simples do que imagina. 
+
+::: Gabarito
+
+1. Primeiro, dividimos os números que iramos multiplicar em números menores;
+
+2. Depois, realizamos mais divisões em números ainda menores;
+
+3. Por fim, faremos isso até atingirmos uma multiplicação de menor simplicidade possível, ou seja, uma multiplicação entre dois números de um único dígito.
+
+:::
+
+???
+
+Então, para poder visualizar como isso ocorre de faot, vamos começar pelo começo, dividindo os números que serão multiplicados. Nesse caso para multiplicar $143721.273123$, iremos dividir da seguinte forma:
 
 * X = 143721 e o número pode ser dividido em duas partes: a e b.
 * Y = 273123 e o número pode ser dividido em duas partes: c e d.
 
-Para ficar mais claro, visualmente seria isso:
+Para ficar mais claro visualmente:
 
 ![](KaratsubaNum.jpeg)
 
+??? Checkpoint
 
-Como a gente pode ver pela figura acima, separamos os dois termos que estão sendo multiplicados em quatro partes:
+Certo, agora temos o número dividido em 4 partes de 3 dígitos cada. Logo, pense na lógica de como essa divisão é feita para números de quaisquer quantidades de algoritmos, não apenas para esse caso exclusivo de multiplicação entre 2 números de 6 dígitos.
+
+::: Gabarito
+
+Você deve ter pensado em sempre dividir esse número pela metade do número total de dígitos, e você está certo!
+Porém, e se tivermos uma quantidade ímpar de dígitos?
+
+::: Mais que um gabarito
+
+Bom, não tem muita diferença, a realidade é que tanto faz. Por exemplo, se iremos dividir o número 12345 em duas parte para o Karatsuba, tanto faz usarmos 123 e 45 como as duas partes ou 12 e 345. Mais para frente você vai entender o porquê disso.
+
+:::
+
+:::
+
+???
+
+Bom, então usando o exemplo de cima, podemos separar os dois termos que estão sendo multiplicados em quatro partes:
 - $A = 143$
 - $B = 721$
 - $C = 273$
 - $D = 123$
 
-Assim, com essa separação, temos os termos necessários para seguir com o método de Karatsuba. Além disso, sendo $n$ o número de dígitos, sabemos que os números $X$ e $Y$ podem ser representados da seguinte maneira:
+??? Checkpoint
+
+Certo, agora com essa separação, temos os termos necessários para seguir com o método de Karatsuba. Então, como ficaria a multiplicação em função de X e Y? Sabemos que o X é o primeiro número (143721) e Y o segundo (273123).
+
+::: Gabarito
+
+Tendo $n$ como o número de dígitos, sabemos que os números $X$ e $Y$ podem ser representados da seguinte maneira:
 
 - x = $A.10^{(n/2)} + B$
 - y = $C.10^{(n/2)} + D$
 
-E, com isso, $X.Y$ (que é o que queremos calcular, certo?) seria a multiplicação desses dois termos que foram representados acima, resultando na **Equação Fundamental de Karatsuba (EFK)** (a gente inventou esse nome, mas isso vai facilitar muito o processo daqui para frente):
+:::
 
-- $EFK = A.C.10^{2.(n/2)} + (A.D + B.C).10^{n/2} + B.D$
+???
+
+E, com isso, $X.Y$ (que é o que queremos calcular, certo?) seria a multiplicação desses dois termos que foram representados acima, resultando na **Equação Fundamental de Karatsuba (EFK)** (a gente inventou esse nome, mas isso vai facilitar muito o processo daqui para frente).
+
+??? Checkpoint
+
+Tranquilo então, agora que temos todos os termos podemos montar a EFK. Então, como teremos o número final a partir dos termos acima?
+
+::: Gabarito
+
+A resposta é realizar simplesmente uma distributiva. 
+Sabemos que:
+
+$EFK = X.Y$
+$EFK = (A.10^{(n/2)} + B).(C.10^{(n/2)} + D)$
+$EFK = AC.10^{2.(n/2)} + (AD + BC).10^{n/2} + BD$
+
+:::
+
+???
+
+No entanto, uma outra reflexão é muito importante para continuarmos. 
+
+Lembra que o nosso objetivo desde o ínicio é reduzir o número de multiplicações realizadas para chegarmos ao valor final da multiplicação, certo? 
 
 Eu sei... É bastante coisa, mas dá para ver que não é complicado (....né?). Bom, os próximos passos são um pouco mais complexos e exigem mais atenção, então pega aquela 7 Bello e dá uma boa olhada no que vem por aí. 
 
 ??? Checkpoint
 
-Imagine agora o que deveríamos fazer após separar os termos desses números, já que agora temos uma multiplicação entre dois números de 3 dígitos cada um. Porém, como faremos cada uma delas? Pense a respeito disso.
+Imagine agora o que deveríamos fazer após separar os termos desses números, já que agora temos uma multiplicação entre dois números de 3 dígitos cada um. Porém, como faremos cada uma delas? Pense na parte de que ainda podemos reduzir o número de multiplicações realizadas na EFK, já que temos 4 sendo realizadas ($AC$, $AD$, $BC$ e $BD$) e podemos reduzir para 3.
 
-**OBS:** Não precisa fazer nenhuma conta ou raciocínio muito longo ou complexo, apenas pense em como seria.
+Logo, como você reduziria o número de multiplicações totais?
+
+**OBS:** Foque no termo do meio, onde há 2 somas entre 2 multiplicações sendo realizadas.
 
 ::: Gabarito
 
-Sabemos que precisaremos calcular $A.C$, $B.D$ e $A.D + B.C$ para aplicar na EFK. Logo, teremos 2 multiplicações entre 3 dígitos cada, a de $A.C$ e $B.D$, correto _meu pequeno gafanhoto_? Sendo assim, ainda precisamos encontrar uma forma de realizar o cálculo de $A.D + B.C$, o que chamaremos de {red}(termo misterioso) sem passos extras desnecessários. Logo, com algumas _matemágicas_:
+Sabemos que precisaremos calcular $AC$, $BD$ e $AD + BC$ para aplicar na EFK. Logo, teremos 2 multiplicações entre 3 dígitos cada, a de $AC$ e $BD$, correto _meu pequeno gafanhoto_? Sendo assim, ainda precisamos encontrar uma forma de realizar o cálculo de $AD + BC$, o que chamaremos de {red}(termo misterioso) sem passos extras desnecessários. Logo, com algumas _matemágicas_:
 
-$= (A + B).(C + D) - A.C - B.D$
+$= (A + B).(C + D) - AC - BD$
 
-$= (A.C + A.D + B.C + B.D) - A.C - A.D$
+$= (AC + AD + BC + BD) - AC - AD$
 
-$= A.D + B.C$
-
-Você deve estar pensando... como raios isso nos ajudou? Bem, é simples, agora nós sabemos que o {red}(termo misterioso) é, na verdade, $(A + B)(C + D) - A.C - B.D$ e, como já estamos realizando o cálculo tanto de $A.C$ quanto de $B.D$, iremos precisar realizar apenas mais uma multiplicação extra, a de $A + B$ por $C + D$.
+$= AD + BC$
 
 Portanto, para deixar isso tudo mais visual, teremos as seguintes multiplicações: 
 
@@ -247,7 +308,7 @@ Portanto, para deixar isso tudo mais visual, teremos as seguintes multiplicaçõ
 
 Agora sim! Tudo pronto, certo? 
 
-Errado! Na verdade o **lema número 1 do Karatsuba** é: Jamais multiplicarás números de 2 ou mais dígitos.
+Errado! Lembre da ideia principal do método de divisão e conquista, precisamos chegar às multiplicações mais simples possíveis.
 
 Logo, teremos que realizar mais Karatsubas com todos os 3 ramos gerados e seus subsequentes até atingir uma multiplicação entre 2 números de 
 {red}(1 dígito) e, já que é um algoritmo de divisão e conquista, isso implicará um código que utilizará regressão. 
@@ -264,7 +325,7 @@ Beleza! Temos a nossa primeira árvore do Karatsuba gerada. Agora, tente fazer, 
 
 Lembre da grandiosa e famosa **Equação Fundamental de Karatsuba (EFK)**!
 
-$A.C.10^{2.(n/2)} + (A.D + B.C).10^{n/2} + B.D$
+$AC.10^{2.(n/2)} + (AD + BC).10^{n/2} + BD$
 
 !!!
 
