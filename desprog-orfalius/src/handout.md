@@ -5,7 +5,7 @@ Introdução (expositiva)
 ---------
 
 
-Muitos dos processos computacionais utilizam multiplicação, principalmente com números **grandes** - e grandes mesmo, na casa de bilhões de casas. É isso que acontece em muitas aplicações de processamento de sinais que são correlação, convolução, análise de frequência, processamento de imagem, etc.Além disso, a eficiência de multiplicações é uma base para implementação de moduladores, criptossistemas e até mesmo para a ULA (Unidade Lógica Aritmética) que vimos na matéria de Elementos de Sistemas... Você lembra, né? **NÉ?** (Diga sim, deixe o Corsi feliz :) ).
+Muitos dos processos computacionais utilizam multiplicação, principalmente com números **grandes** - e grandes mesmo, na casa de bilhões. É isso que acontece em muitas aplicações de processamento de sinais que são correlação, convolução, análise de frequência, processamento de imagem, etc.Além disso, a eficiência de multiplicações é uma base para implementação de moduladores, criptossistemas e até mesmo para a ULA (Unidade Lógica Aritmética) que vimos na matéria de Elementos de Sistemas... Você lembra, né? **NÉ?** (Diga sim, deixe o Corsi feliz :) ).
 
 Pense que nos criptossistemas, por exemplo, a aritmética modular é a operação central na sua grande maioria. E muitos dos sistemas criptográficos requerem multiplicações modulares para gerar chaves privadas, fazendo o uso de exponenciação modular de grandes números para criptografar dados, o que é um processo lento por si só devido a repetição de muitas multiplicações. Agora imagine se a eficiência da operação é baixa... Complicado, não? Hoje vamos ver uma técnica que foi utilizada por muitas empresas, como a Intel, e que é mais eficiente para realizar multiplicações 
 -**principalmente para números grandes** (a essa altura você já deve ter entendido isso).
@@ -22,7 +22,7 @@ você aprendeu no ensino fundamental e a maneira que resolveria uma multiplicaç
 Essa técnica também é conhecida como método ingênuo (ou *"Naive Approach"* em inglês), na qual mutiplicamos cada dígito do multiplicador pelo multiplicando. 
 E a cada linha da multiplicação nós adicionamos zeros, continuamos multiplicando dígito a dígito, até que no final somamos todas as linhas.
 
-Assim, para o caso anterior, para multiplicar um número de três dígitos por outro número de três dígitos realizamos 9 multiplicações individuais.
+Assim, para o caso anterior, para multiplicar um número de três dígitos por outro número de três dígitos, realizamos 9 multiplicações individuais.
 
 
 
@@ -50,6 +50,10 @@ Você provavelmente deve ter pensando em duas estruturas de loop: uma estrutura 
 Dessa forma, como descrito anteriormente, a estrutura de código seria de maneira geral organizada como vetores e com dois loops, dessa forma:
 
 ``` c
+
+array_num1 = {1, 2, 3}
+array_num2 = {4, 5, 6}
+
 for (int i = 0; i < n; i++){
         for (int j = 0; j < n; j++){
             mult_interna[j] = array_num1[i]*array_num2[j]
@@ -65,7 +69,7 @@ Suponha que o `md array_num1` guarde em um vetor todos os dígitos do multiplica
 Ainda, leve em consideração que o `md mult_interna[j]` vá guardando em um vetor o resultado de cada multiplicação individual de uma linha, e que depois
 o `md mult_externa` vá guardando o resultado do número inteiro concatenado de todas as linhas. Por fim, considere que existam duas funções, a `md concatena` e a `md soma`.
 
-Um exemplo, considerando a multiplicação mostrada no início do handout seria:
+Um exemplo com saídas, considerando a multiplicação mostrada no início do handout, seria assim:
 
 ``` c
 int array_num1[3] = {1, 2, 3};
@@ -83,7 +87,7 @@ Por fim, soma retornaria: 56088.
 
 ??? Checkpoint
 
-Nesse método tradicional, se nós multiplicamos dois números de n dígitos, qual seria a sua complexidade?
+Nesse método tradicional, se nós multiplicamos dois números de $n$ dígitos, qual seria a sua complexidade?
 
 !!! Aviso
 Não precisa resolver a conta, reflita sobre o código que você acabou de pensar. Dois loops... (ok, chega de dica!)
@@ -191,6 +195,8 @@ Antes de começar tome uma água. As contas não vão ser extremamente complicad
 
 Primeiro, precisamos deixar claro que o algoritmo de Karatsuba é um algoritmo de divisão e conquista assim como o *merge sort*, ou seja, para realizar a multiplicação, o algoritmo divide um problema maior em problemas menores até atingir um problema de solução mais simples possível.
 
+![](divide_conquer.jpg)
+
 ??? Checkpoint
 
 Tendo em mente o que foi dito acima, pense em como você dividiria o problema da multiplicação entre dois números de 6 dígitos. Como torná-la mais fácil de trabalhar e dividir o problema em mais partes?
@@ -199,7 +205,7 @@ Tendo em mente o que foi dito acima, pense em como você dividiria o problema da
 
 ::: Gabarito
 
-1. Primeiro, dividimos os números que iramos multiplicar em números menores;
+1. Primeiro, dividimos os números que iremos multiplicar em números menores;
 
 2. Depois, realizamos mais divisões em números ainda menores;
 
@@ -209,7 +215,7 @@ Tendo em mente o que foi dito acima, pense em como você dividiria o problema da
 
 ???
 
-Então, para poder visualizar como isso ocorre de faot, vamos começar pelo começo, dividindo os números que serão multiplicados. Nesse caso para multiplicar $143721.273123$, iremos dividir da seguinte forma:
+Então, para poder visualizar como isso ocorre de fato, vamos começar pelo começo, dividindo os números que serão multiplicados. Nesse caso para multiplicar $143721.273123$, iremos dividir da seguinte forma:
 
 * X = 143721 e o número pode ser dividido em duas partes: a e b.
 * Y = 273123 e o número pode ser dividido em duas partes: c e d.
@@ -220,7 +226,7 @@ Para ficar mais claro visualmente:
 
 ??? Checkpoint
 
-Certo, agora temos o número dividido em 4 partes de 3 dígitos cada. Logo, pense na lógica de como essa divisão é feita para números de quaisquer quantidades de algoritmos, não apenas para esse caso exclusivo de multiplicação entre 2 números de 6 dígitos.
+Certo, agora já sabemos que cada número deve ser dividido em 2 partes com 3 dígitos. Logo, pense na lógica de como essa divisão é feita para números de quaisquer quantidades de algoritmos, não apenas para esse caso exclusivo de multiplicação entre 2 números de 6 dígitos.
 
 ::: Gabarito
 
@@ -230,8 +236,6 @@ Porém, e se tivermos uma quantidade ímpar de dígitos?
 ::: Mais que um gabarito
 
 Bom, não tem muita diferença, a realidade é que tanto faz. Por exemplo, se iremos dividir o número 12345 em duas parte para o Karatsuba, tanto faz usarmos 123 e 45 como as duas partes ou 12 e 345. Mais para frente você vai entender o porquê disso.
-
-:::
 
 :::
 
@@ -245,7 +249,15 @@ Bom, então usando o exemplo de cima, podemos separar os dois termos que estão 
 
 ??? Checkpoint
 
-Certo, agora com essa separação, temos os termos necessários para seguir com o método de Karatsuba. Então, como ficaria a multiplicação em função de X e Y? Sabemos que o X é o primeiro número (143721) e Y o segundo (273123).
+Certo, sendo assim, se obtivermos essa separação, teremos os termos necessários para seguir com o método de Karatsuba.  Mas então como seria a representação matemática de X e Y estando separados? 
+
+!!! Não se esqueça
+
+Sabemos que o X é o primeiro número (143721) e Y o segundo (273123).
+
+Pense em uma fórmula geral e lembre-se do método que estamos utilzando: "**DIVIDE** and Conquer".
+
+!!! 
 
 ::: Gabarito
 
@@ -270,7 +282,9 @@ A resposta é realizar simplesmente uma distributiva.
 Sabemos que:
 
 $EFK = X.Y$
+
 $EFK = (A.10^{(n/2)} + B).(C.10^{(n/2)} + D)$
+
 $EFK = AC.10^{2.(n/2)} + (AD + BC).10^{n/2} + BD$
 
 :::
@@ -279,32 +293,40 @@ $EFK = AC.10^{2.(n/2)} + (AD + BC).10^{n/2} + BD$
 
 No entanto, uma outra reflexão é muito importante para continuarmos. 
 
-Lembra que o nosso objetivo desde o ínicio é reduzir o número de multiplicações realizadas para chegarmos ao valor final da multiplicação, certo? 
-
-Eu sei... É bastante coisa, mas dá para ver que não é complicado (....né?). Bom, os próximos passos são um pouco mais complexos e exigem mais atenção, então pega aquela 7 Bello e dá uma boa olhada no que vem por aí. 
+Lembra que o nosso objetivo desde o ínicio é reduzir o número de multiplicações realizadas para chegarmos ao valor final da multiplicação, certo? Bom, como os próximos passos são um pouco mais complexos e exigem mais atenção, já pega aquela 7 Bello e se liga no que vem por aí. 
 
 ??? Checkpoint
 
-Imagine agora o que deveríamos fazer após separar os termos desses números, já que agora temos uma multiplicação entre dois números de 3 dígitos cada um. Porém, como faremos cada uma delas? Pense na parte de que ainda podemos reduzir o número de multiplicações realizadas na EFK, já que temos 4 sendo realizadas ($AC$, $AD$, $BC$ e $BD$) e podemos reduzir para 3.
+Imagine agora o que deveríamos fazer após separar os termos desses números, já que agora temos uma multiplicação entre dois números de 3 dígitos cada um. Porém, como faremos cada uma delas? Lembra do que acabamos de falar? Queremos reduzir o número de multiplicações e podemos fazer isso na EFK. Mais precisamente podemos reduzir as 4 mutiplicações que estão sendo realizadas ($AC$, $AD$, $BC$ e $BD$) para 3.
 
 Logo, como você reduziria o número de multiplicações totais?
 
-**OBS:** Foque no termo do meio, onde há 2 somas entre 2 multiplicações sendo realizadas.
+
+!!! Dica
+
+E pense no seguinte, de qualquer forma você terá que calcular $AC$ e $BD$, como então reduzir essa soma de multiplicações: $AD + BC$?
+
+!!!
 
 ::: Gabarito
 
-Sabemos que precisaremos calcular $AC$, $BD$ e $AD + BC$ para aplicar na EFK. Logo, teremos 2 multiplicações entre 3 dígitos cada, a de $AC$ e $BD$, correto _meu pequeno gafanhoto_? Sendo assim, ainda precisamos encontrar uma forma de realizar o cálculo de $AD + BC$, o que chamaremos de {red}(termo misterioso) sem passos extras desnecessários. Logo, com algumas _matemágicas_:
+Sabemos que precisaremos calcular $AC$, $BD$ e $AD + BC$ para aplicar na EFK. Logo, teremos de cara 2 multiplicações entre 3 dígitos cada, a de $AC$ e $BD$, correto _meu pequeno gafanhoto_? Sendo assim, ainda precisamos encontrar uma forma de realizar o cálculo de $AD + BC$, o que chamaremos de {red}(termo misterioso) sem passos extras desnecessários. Logo, com algumas _matemágicas_:
 
 $= (A + B).(C + D) - AC - BD$
 
-$= (AC + AD + BC + BD) - AC - AD$
+$= (AC + AD + BC + BD) - AC - BD$
 
 $= AD + BC$
 
+Ou seja, estaremos trocando uma multiplicação por somas. Ao invés de realizarmos um Karatsuba com $AD$ e $BC$, estaremos fazendo um com $A+B$ e outro com $C+D$ e não esquecendo de subtrair **do resultado** $AC$ e $BD$ - que já terão sido calculados.
+
 Portanto, para deixar isso tudo mais visual, teremos as seguintes multiplicações: 
 
-
 :karatsuba_arv
+
+:::
+
+???
 
 Agora sim! Tudo pronto, certo? 
 
@@ -313,9 +335,6 @@ Errado! Lembre da ideia principal do método de divisão e conquista, precisamos
 Logo, teremos que realizar mais Karatsubas com todos os 3 ramos gerados e seus subsequentes até atingir uma multiplicação entre 2 números de 
 {red}(1 dígito) e, já que é um algoritmo de divisão e conquista, isso implicará um código que utilizará regressão. 
 
-:::
-
-???
 
 ??? Checkpoint
 
@@ -347,11 +366,12 @@ Logo, após todos esses exercícios, podemos, finalmente, obter a árvore final 
 
 É... pois é, é bastante coisa. Porém, tudo isso fica muito mais simples quando começamos a codar e deixar o computador fazer! ;)
 
-Para facilitar a sua vida e deixar mais visual - *programicamente* falando, se é que você me entende -  aqui está o código do Karatsuba implementado em C (se ficou curioso para entender os detalhes do código, quando terminar o Handout faça a sessão extra). Você provavelmente vai precisar para o próximo bloco...
+Para facilitar a sua vida e deixar mais visual - *programicamente* falando, se é que você me entende -  aqui está o código do Karatsuba implementado em C - que você provavelmente vai precisar para o próximo bloco...
+
+Se ficou curioso para entender os detalhes do código, quando terminar o Handout faça a sessão extra. 
 
 
 ``` c
-
 #include <math.h>
 #include <stdio.h>
 
@@ -372,7 +392,7 @@ long karatsuba(long X, long Y)
     if (X < 10 && Y < 10)
         return X * Y;
 
-    // Determine o tamanho de X e Y
+    // Determina o tamanho de X e Y e pega o maior
     int size = fmax(getSize(X), getSize(Y));
 
     // Separa o X do Y e define quem é o a, o b, o c e o d
@@ -413,11 +433,11 @@ Como já vimos em aulas passadas, com algoritmos com recursão, é preciso fazer
 
 ??? Checkpoint
 
-Vamos começar a pensar na árvore de recursão. Pensando no código e quantas recursões temos, quantos degraus em cada iteração
+Vamos começar a pensar na árvore de recursão. Pensando no código e quantas recursões temos, quantos ramos temos em cada iteração? **LEMBRE-SE :** quando resolvíamos complexidades com recursões nós sempre pensávamos em como a recursão vai acontecendo e também na sua condição de parada...  
  
 ::: Gabarito
 
-Como visto anteriormente, temos 3 recursões. Portanto nossa árvore de recursões terá 4 ramos em cada iteração.
+Como visto anteriormente, temos 3 recursões e a condição de parada (sim, os vermelhos da árvore, os vermelhos...). Portanto nossa árvore de recursões terá 4 ramos em cada iteração.
 
 :::
 ???
@@ -441,26 +461,26 @@ Por fim, tente fazer a árvore de recursão inteira agora que você sabe como ca
 
 ![](arvRecursao.png)
 
-Em cada degrau da árvore, temos três ramos que indicam as recursões, onde cada uma é **f(*número de dígitos*/2)**, e um ramo que representa o que acontece na *volta*, ou seja, a conta que "junta" tudo. Nesse ramo da volta, a complexidade é o próprio ***número de dígitos*/2**.
+Em cada degrau da árvore, temos três ramos que indicam as recursões, onde cada uma é **f(*n*/2)**, e um ramo que representa o que acontece na *volta*, ou seja, a conta que "junta" tudo. Nesse ramo da volta, a complexidade é o próprio ***n*/2**.
 
 Para ilustrar, veja o degrau de *f(n/2)* e seus ramos. Cada ramo  é *f(n/4)*, e o ramo de volta é o próprio *n/2*.
 
 :::
+
 ???
 
 Sabendo a árvore de recursão, podemos usá-la para calcular a complexidade inteira. Prepare-se que vamos usar um pouco daquela *matemágica*!
 
 ??? Checkpoint
 
-Vamos calcular o algorítmo do Karatsuba passo a passo. 
+Agora vamos calcular o algoritmo de Karatsuba passo a passo. **Passo a passo**, não tente apressar!
 
-''' Dica
+!!! Dica
 Revise o material no <a href=https://ensino.hashi.pro.br/desprog/resumo/analise/caixa.html> site da disciplina</a> em caso de dúvidas.
-'''
-
+!!! 
 **Passo 1:**
 
-Vamos começar calculando a altura da árvore (denominaremos como x).
+Vamos começar calculando a altura da árvore (denominaremos como x). Qual é a relação de $n$ com a altura?
 
 ::: Gabarito Passo 1
 
@@ -472,11 +492,11 @@ Primeiro é importante identificar a altura de nossa árvore. Como $n$ vai reduz
 
 **Passo 2:**
 
-Como vimos ao longo da matéria, para calcular a recursão precisamos saber qual é a complexidade do ramo referente ao *retorno da recursão*. Tente calcular isso agora, qual o padrão que o retorno das recursões seguem?
+Como vimos ao longo da matéria, para calcular a recursão precisamos saber qual é a complexidade do ramo referente ao *retorno da recursão* e dos outros ramos da própria recurssão, mas como o tempo está curto vamos calcular apenas a primeira (os famosos {red}(vermelhos)) que é quem de fato vai ditar a complexidade. Dessa forma, tente calcular isso agora, qual o padrão que o retorno das recursões seguem?
 
 ::: Gabarito Passo 2
 
-O próximo passo é identificar o padrão do retorno da recursão (os passos em {red}(vermelho) na figura anterior). Não podemos esquecer que, para não deixar a imagem muito poluída, não foram mostradas as recursões dos dois ramos do meio, mas ainda temos ramos {red}("vermelhos") neles. Essa próxima imagem mostra a lógica apenas desses ramos:
+Assim, primeiro precisamos identificar o padrão do retorno da recursão (os passos em {red}(vermelho) na figura anterior). Não podemos esquecer que, para não deixar a imagem muito poluída, não foram mostradas as recursões dos dois ramos do meio, mas ainda temos ramos {red}("vermelhos") neles. Essa próxima imagem mostra a lógica apenas desses ramos:
 
 ![](arvRecursao2.png)
 
@@ -499,7 +519,7 @@ Onde:
 
 **Passo 3:**
 
-Finalmente já temos todas informações para calcular e simplificar a complexidade do algoritmo. Tente fazer essa parte sozinho, mas lembre-se de verificar o material da disciplina, especialmente as ferramentas matemáticas de manipulação de log! Esse é um passo mais demorado, mas não se preocupe, basta tomar cuidado nas contase ir com calma ;)!
+Finalmente já temos todas informações para calcular e simplificar a complexidade do algoritmo. Tente fazer essa parte sozinho, mas lembre-se de verificar o material da disciplina, especialmente as ferramentas matemáticas de manipulação de log! Esse é um passo mais demorado, mas não se preocupe, basta tomar cuidado nas contas e ir com calma ;)!
 
 ::: Gabarito Passo 3
 
@@ -533,10 +553,13 @@ Porém, ainda não acabamos. Como vocês sabem, para calcular a complexidade mes
 Portanto, a complexidade do algoritmo é ***$O(n^{log_{2}{3}})$***.
 ???
 
-Agora sabemos a complexidade do algorimto, mas por que ele é melhor que o método normal de multiplicação? Já que $log_23$ é igual a aproximadamente 1,5849, podemos escrever a complexidade do Karatsuba como *$O(n^{1.59})$*. 
+Agora sabemos a complexidade do algoritmo, mas por que ele é melhor que o método normal de multiplicação? Já que $log_23$ é igual a aproximadamente 1,5849, podemos escrever a complexidade do Karatsuba como *$O(n^{1.59})$*. 
 
-A complexidade do método normal é ***$O(n^2)$***, enquanto a complexidade do algoritmo Karatsuba é ***$O(n^{1.59})$***, e portanto, é mais eficiente! Não é uma melhora tão grande, já que existem algoritmos mais recentes e mais eficientes que também realizam multiplicação. Porém, considerando a data que foi desenvolvido e sua complexidade, o algoritmo Karatsuba, sem dúvidas, é um algoritmo que vale a pena estudar!
+A complexidade do método normal é ***$O(n^2)$***, enquanto a complexidade do algoritmo Karatsuba é ***$O(n^{1.59})$***, e portanto, é mais eficiente! Não é uma melhora tão grande, já que existem algoritmos mais recentes e mais eficientes que também realizam multiplicação. Porém, considerando a data que foi desenvolvido e sua complexidade, o algoritmo Karatsuba, sem dúvidas, é um algoritmo que vale a pena estudar para entender um pouco da base de como podemos simplificar operações que apesar de básicas podem complicar muito. 
 
+E para finalizar, só queria deixar claro que: as simplificações não param por aí meus colegas. Tem como ir muito além ainda nesse assunto.
+
+![](karatsuba_meme.png)
 
 Desafio/ Sessão extra
 -------
@@ -545,7 +568,7 @@ Desafio/ Sessão extra
 Se você já terminou as sessões anteriores e ficou curioso para saber como se implementa o código, então aqui está uma sessão extra para entender a lógica do código. Apenas se já terminou, priorize as outras sessões.  
 !!!
 
-No bloco anterior você aprendeu e deduziu a fórmula do Karatsuba. Agora, como seria isso em código?
+Nos blocos anteriores você aprendeu e deduziu a fórmula do Karatsuba. Agora, como seria isso em código?
 
 
 Vimos que o primeiro passo era dividir quem iremos multiplicar em números menores. Sendo assim, precisaremos ir dividindo os números na função até que eles sejam menores que 10, ou seja, possuam um único dígito para multiplicarmos.
@@ -583,7 +606,7 @@ Após descobrir quantos dígitos tem um número, podemos começar com a estrutur
 Implemente em C, a condição de parada da função `md karatsuba(long X, long Y)` que recebe dois números do tipo long.
 
 !!! Dica
-Se você esqueceu a condição de parada, volte ao início desse bloco.
+Se você esqueceu a condição de parada, volte ao início do bloco "*Como o algoritmo funciona?*".
 !!!
 
 ::: Gabarito
