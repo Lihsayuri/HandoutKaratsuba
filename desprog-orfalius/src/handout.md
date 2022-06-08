@@ -198,9 +198,9 @@ Primeiro, precisamos deixar claro que o algoritmo de Karatsuba é um algoritmo d
 
 ??? Checkpoint
 
-Tendo em mente o que foi dito acima, pense em como você dividiria o problema da multiplicação entre dois números de 6 dígitos. Como torná-la mais fácil de trabalhar e dividir o problema em mais partes?
+Tendo em mente o que foi dito acima, pense em como você dividiria o problema da multiplicação entre dois números de 6 dígitos. Como torná-la mais fácil de trabalhar e dividir o problema em mais partes? Ou seja, como torná-las em multiplicações de 1 dígito só?
 
-**OBS:** Não tente pensar em nada muito complexo, a resposta pode ser mais simples do que imagina. 
+**OBS:** Não tente pensar em nada muito complexo, a resposta pode ser mais simples do que imagina. Tente escrever um passo a passo do que você faria para resolver o problema.
 
 ::: Gabarito
 
@@ -248,7 +248,7 @@ Bom, então usando o exemplo de cima, podemos separar os dois termos que estão 
 
 ??? Checkpoint
 
-Certo, sendo assim, se obtivermos essa separação, teremos os termos necessários para seguir com o método de Karatsuba.  Mas então como seria a representação matemática de X e Y estando separados? 
+Certo, sendo assim, se obtivermos essa separação, teremos os termos necessários para seguir com o método de Karatsuba.  Mas então como chegamos em X e Y a partir de A,B,C e D? Que contas são necessárias fazer? 
 
 !!! Não se esqueça
 
@@ -298,18 +298,21 @@ Lembra que o nosso objetivo desde o ínicio é reduzir o número de multiplicaç
 
 Imagine agora o que deveríamos fazer após separar os termos desses números, já que agora temos uma multiplicação entre dois números de 3 dígitos cada um. Porém, como faremos cada uma delas? Lembra do que acabamos de falar? Queremos reduzir o número de multiplicações e podemos fazer isso na EFK. Mais precisamente podemos reduzir as 4 mutiplicações que estão sendo realizadas ($AC$, $AD$, $BC$ e $BD$) para 3.
 
-Logo, como você reduziria o número de multiplicações totais?
-
+Logo, como você reduziria o número de multiplicações totais? Lembre que somas extras nas contas não importam para a eficiência do algoritmo no final, já que as somas são O(n) e, como será explicado mais para frente nesse Handout, a complexidade do nosso algoritmo é superior a isso. 
 
 !!! Dica
 
-E pense no seguinte, de qualquer forma você terá que calcular $AC$ e $BD$, como então reduzir essa soma de multiplicações: $AD + BC$?
+Para facilitar o processo, inicie o seu pensamento a partir da seguinte conta:
+
+$(A + B).(C + D)$
+
+Como chegar em $AD + BC$ a partir da conta acima?
 
 !!!
 
 ::: Gabarito
 
-Sabemos que precisaremos calcular $AC$, $BD$ e $AD + BC$ para aplicar na EFK. Logo, teremos de cara 2 multiplicações entre 3 dígitos cada, a de $AC$ e $BD$, correto _meu pequeno gafanhoto_? Sendo assim, ainda precisamos encontrar uma forma de realizar o cálculo de $AD + BC$, o que chamaremos de {red}(termo misterioso) sem passos extras desnecessários. Logo, com algumas _matemágicas_:
+Sabemos que precisaremos calcular $AC$, $BD$ e $AD + BC$ para aplicar na EFK. Logo, teremos de cara 2 multiplicações entre 3 dígitos cada, a de $AC$ e $BD$, correto _meu pequeno gafanhoto_? Sendo assim, ainda precisamos encontrar uma forma de realizar o cálculo de $AD + BC$, o que chamaremos de {red}(termo misterioso) sem passos extras desnecessários. Logo, a partir da dica acima e com algumas _matemágicas_ , ou seja, retirando os termos desnecessários por meio de subtrações (já que, como dito acima, as somas não alteram a complexidade do algoritmo):
 
 $= (A + B).(C + D) - AC - BD$
 
