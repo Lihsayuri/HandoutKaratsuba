@@ -5,7 +5,7 @@ Introdução (expositiva)
 ---------
 
 
-Muitos dos processos computacionais utilizam multiplicação, principalmente com números **grandes** - e grandes mesmo, na casa de bilhões. É isso que acontece em muitas aplicações de processamento de sinais que são correlação, convolução, análise de frequência, processamento de imagem, etc.Além disso, a eficiência de multiplicações é uma base para implementação de moduladores, criptossistemas e até mesmo para a ULA (Unidade Lógica Aritmética) que vimos na matéria de Elementos de Sistemas... Você lembra, né? **NÉ?** (Diga sim, deixe o Corsi feliz :) ).
+Muitos dos processos computacionais utilizam multiplicação, principalmente com números **grandes** - e grandes mesmo, na casa de bilhões. É isso que acontece em muitas aplicações de processamento de sinais que são correlação, convolução, análise de frequência, processamento de imagem, etc. Além disso, a eficiência de multiplicações é uma base para implementação de moduladores, criptossistemas e até mesmo para a ULA (Unidade Lógica Aritmética) que vimos na matéria de Elementos de Sistemas... Você lembra, né? **NÉ?** (Diga sim, deixe o Corsi feliz :) ).
 
 Pense que nos criptossistemas, por exemplo, a aritmética modular é a operação central na sua grande maioria. E muitos dos sistemas criptográficos requerem multiplicações modulares para gerar chaves privadas, fazendo o uso de exponenciação modular de grandes números para criptografar dados, o que é um processo lento por si só devido a repetição de muitas multiplicações. Agora imagine se a eficiência da operação é baixa... Complicado, não? Hoje vamos ver uma técnica que foi utilizada por muitas empresas, como a Intel, e que é mais eficiente para realizar multiplicações 
 -**principalmente para números grandes** (a essa altura você já deve ter entendido isso).
@@ -28,10 +28,9 @@ Assim, para o caso anterior, para multiplicar um número de três dígitos por o
 
 ??? Checkpoint
 
-Se você tivesse que implementar a multiplicação desse método ingênuo em forma de programação, como faria?
+Se você tivesse que implementar a multiplicação desse método ingênuo em forma de programação com **vetores** representando cada um dos dois números, como faria?
 
-- Lembra de Elementos de Sistemas? Para implementar uma multiplicação simples (de um único dígito), em Assembly nós realizávamos várias somas. Agora pense que você possui a multiplicação de um único dígito disponível, mas precisa mutiplicar vários dígitos...
-- Lembre-se: dois números podem ser representados por **VETORES**. Mas por quê? Pense na maneira nua e crua de implementar uma multiplicação. Queremos multiplicar dígito a dígito...
+- Lembra de Elementos de Sistemas? Para implementar uma multiplicação simples (de um único dígito), em Assembly nós realizávamos várias somas. Agora pense que você possui a multiplicação de um único dígito disponível, mas precisa mutiplicar vários dígitos... 
 
 
 !!! Aviso
@@ -181,7 +180,7 @@ Logo a complexidade seria de $O(n²)$.
 ???
 
 Como vimos em aula, uma complexidade quadrática é algo que queremos evitar, sendo pior que a complexidade linear, logarítmica, e constante.
-E é aí que entra o algoritmo de Karatsuba. Ele não é o melhor algoritmo de todos para diminuir a complexidade de multiplicações, já que existem outros algoritmos como o de Toom-Cook e o Schönhage–Strassen, que são mais rápidos (<a href="https://en.wikipedia.org/wiki/Karatsuba_algorithm"> Karatsuba Wikipedia </a>). Mas né, vamos dar um desconto, foi desenvolvido em 1960 por Anatoly Karatsuba, um matemático que nasceu na União Soviética (<a href="https://www.youtube.com/watch?v=U06jlgpMtQs"> Importante </a>) e que morreu em 2008, tendo trabalhado principalmente nos campos da teoria analítica de número e nas séries de Dirichlet (não se preocupe com o que é, só por ter um nome difícil já é legal).
+E é aí que entra o algoritmo de Karatsuba. Ele não é o melhor algoritmo de todos para diminuir a complexidade de multiplicações, já que existem outros algoritmos como o de Toom-Cook e o Schönhage–Strassen, que são mais rápidos (<a href="https://en.wikipedia.org/wiki/Karatsuba_algorithm"> Karatsuba Wikipedia </a>). Mas né, vamos dar um desconto, foi desenvolvido em 1960 por Anatoly Karatsuba, um matemático que nasceu na União Soviética (<a href="https://www.youtube.com/watch?v=U06jlgpMtQs"> Importante </a>) e que morreu em 2008
 
 
 Como o algoritmo funciona?
