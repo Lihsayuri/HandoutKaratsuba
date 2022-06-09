@@ -198,7 +198,7 @@ Primeiro, precisamos deixar claro que o algoritmo de Karatsuba é um algoritmo d
 
 ??? Checkpoint
 
-Tendo em mente o que foi dito acima, pense em como você dividiria o problema da multiplicação entre dois números de 6 dígitos. Como torná-la mais fácil de trabalhar e dividir o problema em mais partes? Ou seja, como torná-las em multiplicações de 1 dígito só?
+Como podemos tornar todas essas contas em multiplicações de 1 dígito só?
 
 **OBS:** Não tente pensar em nada muito complexo, a resposta pode ser mais simples do que imagina. Tente escrever um passo a passo do que você faria para resolver o problema.
 
@@ -273,7 +273,7 @@ E, com isso, $X.Y$ (que é o que queremos calcular, certo?) seria a multiplicaç
 
 ??? Checkpoint
 
-Tranquilo então, agora que temos todos os termos podemos montar a EFK. Então, como teremos o número final a partir dos termos acima?
+Tranquilo então, agora que temos todos os termos podemos montar a EFK. Agora, realize a multiplicação de X por Y com o que foi visto acima. O que teremos?
 
 ::: Gabarito
 
@@ -340,7 +340,9 @@ Logo, teremos que realizar mais Karatsubas com todos os 3 ramos gerados e seus s
 
 ??? Checkpoint
 
-Beleza! Temos a nossa primeira árvore do Karatsuba gerada. Agora, tente fazer, por completo, o ramo da esquerda do exercício acima, chegando no valor final após todas as iterações com o Karatsuba.
+![](karatsuba_arv/karatsuba_arv_04.png)
+
+Beleza! Acima nós temos a nossa primeira árvore do Karatsuba gerada, a qual foi feita no checkpoint anterior, lembra?. Agora, tente fazer, por completo, o ramo da esquerda do exercício acima, chegando no valor final após todas as iterações com o Karatsuba.
 
 !!! Dica
 
