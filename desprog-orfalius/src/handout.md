@@ -342,7 +342,7 @@ Logo, teremos que realizar mais Karatsubas com todos os 3 ramos gerados e seus s
 
 ![](karatsuba_arv/karatsuba_arv_04.png)
 
-Beleza! Temos a nossa primeira árvore do Karatsuba gerada. Agora, tente fazer, por completo, o ramo da esquerda do exercício acima, chegando no valor final após todas as iterações com o Karatsuba.
+Beleza! Acima nós temos a nossa primeira árvore do Karatsuba gerada, a qual foi feita no checkpoint anterior, lembra?. Agora, tente fazer, por completo, o ramo da esquerda do exercício acima, chegando no valor final após todas as iterações com o Karatsuba.
 
 !!! Dica
 
