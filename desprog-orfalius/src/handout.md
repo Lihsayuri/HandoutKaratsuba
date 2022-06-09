@@ -500,7 +500,7 @@ Assim, primeiro precisamos identificar o padrão do retorno da recursão (os pas
 
 Começamos com 1 vez n ([[{red}(n)]]), depois temos 3 vezes n/2 ([[{red}(3n/2)]]), no próximo 9 vezes n/4 ([[{red}(9n/4)]]) ...
 
-Seguindo esse padrão, temos uma **progressão geométrica**, com a raiz sendo 3/2! Assim:
+Seguindo esse padrão, temos uma **progressão geométrica**, com a razão sendo 3/2! Assim:
 
 * [[q = 3/2]]
 
@@ -520,7 +520,7 @@ Onde:
 Finalmente já temos todas informações para calcular e simplificar a complexidade do algoritmo. Tente fazer essa parte sozinho, mas lembre-se de verificar o material da disciplina, especialmente as ferramentas matemáticas de manipulação de log! Esse é um passo mais demorado, mas não se preocupe, basta tomar cuidado nas contas e ir com calma ;)!
 Algumas das manipulações que faremos são:
 
-* Cancelamento: $b^log_{b}n = n$;
+* Cancelamento: $b^{log_{b}n} = n$;
 * Inversão de base: $log_{b}a = \frac{1}{log_{a}b}$;
 
 ::: Gabarito Passo 3
@@ -556,7 +556,7 @@ Portanto, a complexidade do algoritmo é ***$O(n^{log_{2}{3}})$***.
 ???
 
 ??? Checkpoint
-Tente agora pensar, qual complexidade é melhor? $O(n)$, que é a complexidade da multiplicação normal, ou $O(n^{log_{2}{3}})$, que é a complexidade do Karatsuba?
+Tente agora pensar, qual complexidade é melhor? $O(n^{2})$, que é a complexidade da multiplicação normal, ou $O(n^{log_{2}{3}})$, que é a complexidade do Karatsuba?
 
 ::: Gabarito
 
