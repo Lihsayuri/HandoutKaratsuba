@@ -424,7 +424,7 @@ Como visto anteriormente, temos 3 recursões. Portanto nossa árvore de recursõ
 
 ??? Checkpoint
 
-Agora, o próximo passo é pensar nas iterações! Pensando em como o algoritmo (baseado em *divisão e conquista*) trabalha com os números que recebe, escreva como fica a chamada das recursões depois da primeira chamada **f(n)**.
+Agora, o próximo passo é pensar nas iterações! Pensando em como o algoritmo (baseado em *divisão e conquista*) trabalha com os números que recebe, escreva como fica a chamada das recursões depois da primeira chamada **f(n)**. Lembre-se também que além da recursão, temos a soma das iterações, que aparecerá como um ramo a mais na árvore.
 
 ::: Gabarito
 
@@ -533,9 +533,18 @@ Porém, ainda não acabamos. Como vocês sabem, para calcular a complexidade mes
 Portanto, a complexidade do algoritmo é ***$O(n^{log_{2}{3}})$***.
 ???
 
+??? Checkpoint
+Tente agora pensar, qual complexidade é melhor? $O(n)$, que é a complexidade da multiplicação normal, ou $O(n^{log_{2}{3}})$, que é a complexidade do Karatsuba?
+
+::: Gabarito
+
 Agora sabemos a complexidade do algorimto, mas por que ele é melhor que o método normal de multiplicação? Já que $log_23$ é igual a aproximadamente 1,5849, podemos escrever a complexidade do Karatsuba como *$O(n^{1.59})$*. 
 
 A complexidade do método normal é ***$O(n^2)$***, enquanto a complexidade do algoritmo Karatsuba é ***$O(n^{1.59})$***, e portanto, é mais eficiente! Não é uma melhora tão grande, já que existem algoritmos mais recentes e mais eficientes que também realizam multiplicação. Porém, considerando a data que foi desenvolvido e sua complexidade, o algoritmo Karatsuba, sem dúvidas, é um algoritmo que vale a pena estudar!
+
+:::
+
+???
 
 
 Desafio/ Sessão extra
