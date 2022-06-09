@@ -522,6 +522,10 @@ Onde:
 **Passo 3:**
 
 Finalmente já temos todas informações para calcular e simplificar a complexidade do algoritmo. Tente fazer essa parte sozinho, mas lembre-se de verificar o material da disciplina, especialmente as ferramentas matemáticas de manipulação de log! Esse é um passo mais demorado, mas não se preocupe, basta tomar cuidado nas contas e ir com calma ;)!
+Algumas das manipulações que faremos são:
+
+* Cancelamento: $b^log_{b}n = n$;
+* Inversão de base: $log_{b}a = \frac{1}{log_{a}b}$;
 
 ::: Gabarito Passo 3
 
