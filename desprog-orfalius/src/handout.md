@@ -198,7 +198,7 @@ Primeiro, precisamos deixar claro que o algoritmo de Karatsuba é um algoritmo d
 
 ??? Checkpoint
 
-Como podemos tornar todas essas contas em multiplicações de 1 dígito só?
+Certo, então pensando agora em uma multiplicação entre dois números de 6 dígitos cada, como podemos simplificar e tornar todas essas contas em multiplicações de 1 dígito só? Ou seja, ao invés de multiplicarmos 6 dígitos por 6 dígitos e termos diversas contas para fazer, como chegaríamos em um produto de 1 dígito por 1 dígito?
 
 **OBS:** Não tente pensar em nada muito complexo, a resposta pode ser mais simples do que imagina. Tente escrever um passo a passo do que você faria para resolver o problema.
 
@@ -273,7 +273,7 @@ E, com isso, $X.Y$ (que é o que queremos calcular, certo?) seria a multiplicaç
 
 ??? Checkpoint
 
-Tranquilo então, agora que temos todos os termos podemos montar a EFK. Agora, realize a multiplicação de X por Y com o que foi visto acima. O que teremos?
+Tranquilo então, agora que temos todos os termos podemos montar a EFK. Agora, realize a multiplicação de X por Y (em função de A,B,C e D) com o que foi visto acima. O que teremos?
 
 ::: Gabarito
 
@@ -296,17 +296,11 @@ Lembra que o nosso objetivo desde o ínicio é reduzir o número de multiplicaç
 
 ??? Checkpoint
 
-Imagine agora o que deveríamos fazer após separar os termos desses números, já que agora temos uma multiplicação entre dois números de 3 dígitos cada um. Porém, como faremos cada uma delas? Lembra do que acabamos de falar? Queremos reduzir o número de multiplicações e podemos fazer isso na EFK. Mais precisamente podemos reduzir as 4 mutiplicações que estão sendo realizadas ($AC$, $AD$, $BC$ e $BD$) para 3.
-
-Logo, como você reduziria o número de multiplicações totais? Lembre que somas extras nas contas não importam para a eficiência do algoritmo no final, já que as somas são O(n) e, como será explicado mais para frente nesse Handout, a complexidade do nosso algoritmo é superior a isso. 
+Agora, tendo em vista que queremos reduzir o número de multiplicações necessárias, realize a distributiva $(A + B).(C + D)$ e, após isso, tente chegar no termo (AD + BC) a partir dela. 
 
 !!! Dica
 
-Para facilitar o processo, inicie o seu pensamento a partir da seguinte conta:
-
-$(A + B).(C + D)$
-
-Como chegar em $AD + BC$ a partir da conta acima?
+Somas ou subtrações extras não alteram a complexidade do algoritmo, já que são todas O(n) e, além disso, menores que a complexidade de uma multiplicação.
 
 !!!
 
